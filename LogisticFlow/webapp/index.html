@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>logistic-flow</title>
+    <script
+      id="sap-ui-bootstrap"
+      src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"
+      data-sap-ui-theme="sap_horizon"
+      data-sap-ui-libs="sap.m, sap.ui.layout"
+      data-sap-ui-resourceroots='{
+            "logistic-flow": "./"
+        }'
+      data-sap-ui-async="true"
+      data-sap-ui-frameOptions="trusted"
+      data-sap-ui-oninit="module:sap/ui/core/ComponentSupport"
+    ></script>
+
+    <!-- Live Reload -->
+    <script src="http://localhost:8081/livereload.js"></script>
+
+    <!-- Redirect automatico a MainView se l'URL è vuoto -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        if (!window.location.hash || window.location.pathname.endsWith("index.html")) {
+            window.history.replaceState({}, document.title, window.location.origin + "/#/MainView");
+        }
+    });
+</script>
+  </head>
+  <body class="sapUiBody">
+    <div data-sap-ui-component data-name="logistic-flow" data-id="container"></div>
+  </body>
+</html>

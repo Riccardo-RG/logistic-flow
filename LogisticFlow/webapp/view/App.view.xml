@@ -1,0 +1,11 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m" displayBlock="true">
+    <App id="app">
+        <NavContainer id="navContainer">
+            <pages>
+                <mvc:XMLView id="MainView" viewName="logistic-flow.view.MainView"/>
+                <mvc:XMLView id="BP-Preparation" viewName="logistic-flow.view.BP-Preparation"/>
+            </pages>
+        </NavContainer>
+    </App>
+</mvc:View>

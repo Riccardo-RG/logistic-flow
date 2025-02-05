@@ -1,0 +1,71 @@
+{
+  "_version": "1.12.0",
+  "sap.app": {
+    "id": "logistic-flow",
+    "type": "application",
+    "applicationVersion": {
+      "version": "0.0.1"
+    }
+  },
+  "sap.ui5": {
+    "models": {
+      "": {
+        "type": "sap.ui.model.json.JSONModel",
+        "settings": {}
+      }
+    },
+    "rootView": {
+      "viewName": "logistic-flow.view.App",
+      "type": "XML",
+      "id": "App"
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "viewType": "XML",
+        "viewPath": "logistic-flow.view",
+        "controlId": "app",  
+        "controlAggregation": "pages",
+        "async": true
+      },
+      "routes": [
+        {
+          "pattern": "",
+          "name": "MainView",
+          "target": "MainView"
+        },
+        {
+          "pattern": "BP-Preparation",
+          "name": "BP-Preparation",
+          "target": "BP-Preparation"
+        },
+        {
+          "pattern": "ProductDetail/{productId}",
+          "name": "ProductDetail",
+          "target": "ProductDetail"
+        }
+     
+      ],
+    "targets": {
+        "MainView": {
+          "viewName": "MainView",  
+          "viewType": "XML",
+          "controlId": "navContainer",  
+          "controlAggregation": "pages"
+        },      
+        "BP-Preparation": {
+          "viewName": "BP-Preparation",
+          "viewType": "XML",
+          "controlId": "navContainer",
+          "controlAggregation": "pages"
+        },
+        "ProductDetail": {
+          "viewName": "ProductDetail",
+          "viewType": "XML",
+          "controlId": "navContainer", 
+          "controlAggregation": "pages"
+        }
+      }
+    }
+  }
+}

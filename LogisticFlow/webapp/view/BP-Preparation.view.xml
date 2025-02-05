@@ -1,0 +1,62 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m" controllerName="logistic-flow.controller.BP-Preparation">
+
+    <Page title="DD - Préparation BP" class="bpPreparationPage">
+        <content>
+            <Panel class="bpPanel">
+                <headerToolbar>
+                    <Toolbar>
+                        <Button text="⬅ En arrière" press="onNavBack" type="Transparent" />
+                        <ToolbarSpacer/>
+                        <Title text="Saisie des préparations" level="H2"/>
+                    </Toolbar>
+                </headerToolbar>
+                <VBox>
+                    <VBox class="bpSearchContainer">
+                        <HBox class="inputPair">
+                            <Label text="Dépôt:" class="bpLabel"/>
+                            <Input id="depotInput" value="1" width="50px"/>
+                        </HBox>
+                        <HBox class="inputPair">
+                            <Label text="BP:" class="bpLabel"/>
+                            <Input id="bpInput" placeholder="BP nombre..." liveChange="onSearchBP"/>
+                        </HBox>
+                    </VBox>
+                    <HBox class="bpButtons">
+                        <!-- Assegno un ID per poter aggiungere uno style class quando viene applicato il filtro -->
+                        <Button id="idBpAutoButton" text="BP AUTO" press="onToggleFilter" class="bpButton" />
+                        <Button text="SUIVANT" press="onNextBP" class="bpButton"/>
+                    </HBox>
+                    <Table id="bpTable" mode="SingleSelectMaster" selectionChange="onBPSelected" class="scrollableTable" items="{/BPData}">
+                        <columns>
+                            <Column>
+                                <header>
+                                    <Text text="N° BP"/>
+                                </header>
+                            </Column>
+                            <Column>
+                                <header>
+                                    <Text text="Client"/>
+                                </header>
+                            </Column>
+                            <Column>
+                                <header>
+                                    <Text text="Transporteur"/>
+                                </header>
+                            </Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem>
+                                <cells>
+                                    <ObjectIdentifier text="{BPNumber}"/>
+                                    <Text text="{Client}"/>
+                                    <Text text="{Transporter}"/>
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                </VBox>
+            </Panel>
+        </content>
+    </Page>
+</mvc:View>

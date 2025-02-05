@@ -1,0 +1,13 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m" displayBlock="true" controllerName="fioriapp.controller.ProductDetail">
+    <Page id="productDetailPage" title="Dettaglio Prodotto">
+        <content>
+            <VBox>
+                <Text text="ID: {/ProductID}" />
+                <Text text="Nome: {/ProductName}" />
+                <Text text="Prezzo: {/UnitPrice}" />
+                <Text text="Quantità per unità: {/QuantityPerUnit}" />
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

@@ -1,0 +1,54 @@
+{
+  "BPData": [
+    {
+      "BPNumber": "82134",
+      "Client": "MILAR Sp",
+      "Transporter": "222"
+    },
+    {
+      "BPNumber": "10002",
+      "Client": "LITEBOAT SARL",
+      "Transporter": "123"
+    },
+    {
+      "BPNumber": "10003",
+      "Client": "BLUETEK",
+      "Transporter": "3455"
+    },
+    {
+      "BPNumber": "10004",
+      "Client": "LITEBOAT SARL",
+      "Transporter": "566"
+    },
+    {
+      "BPNumber": "10005",
+      "Client": "ALFAKEM LTD",
+      "Transporter": "345"
+    },
+     {
+      "BPNumber": "82134",
+      "Client": "MILAR Sp",
+      "Transporter": "222"
+    },
+    {
+      "BPNumber": "10002",
+      "Client": "MILAR Sp",
+      "Transporter": "123"
+    },
+    {
+      "BPNumber": "10003",
+      "Client": "ALFAKEM LTD",
+      "Transporter": "567"
+    },
+    {
+      "BPNumber": "10004",
+      "Client": "TEST CUSTOMER LUNGHEZZA NAME TEST ",
+      "Transporter": "134"
+    },
+    {
+      "BPNumber": "10005",
+      "Client": "CLIENT D",
+      "Transporter": "345"
+    }
+  ]
+}
