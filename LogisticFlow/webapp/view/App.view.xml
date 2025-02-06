@@ -5,6 +5,7 @@
             <pages>
                 <mvc:XMLView id="MainView" viewName="logistic-flow.view.MainView"/>
                 <mvc:XMLView id="BP-Preparation" viewName="logistic-flow.view.BP-Preparation"/>
+                <mvc:XMLView id="BP-Recherche" viewName="logistic-flow.view.BP-Recherche"/>
             </pages>
         </NavContainer>
     </App>

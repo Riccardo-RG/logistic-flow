@@ -8,9 +8,17 @@
     }
   },
   "sap.ui5": {
+    "dependencies": {
+      "minUI5Version": "1.60",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {}
+      }
+    },
     "models": {
       "": {
         "type": "sap.ui.model.json.JSONModel",
+        "uri": "model/data.json",
         "settings": {}
       }
     },
@@ -40,21 +48,31 @@
           "target": "BP-Preparation"
         },
         {
+          "pattern": "BP-Recherche",
+          "name": "BP-Recherche",
+          "target": "BP-Recherche"
+        },
+        {
           "pattern": "ProductDetail/{productId}",
           "name": "ProductDetail",
           "target": "ProductDetail"
         }
-     
       ],
-    "targets": {
+      "targets": {
         "MainView": {
           "viewName": "MainView",  
           "viewType": "XML",
           "controlId": "navContainer",  
           "controlAggregation": "pages"
-        },      
+        },
         "BP-Preparation": {
           "viewName": "BP-Preparation",
+          "viewType": "XML",
+          "controlId": "navContainer",
+          "controlAggregation": "pages"
+        },
+        "BP-Recherche": {
+          "viewName": "BP-Recherche",
           "viewType": "XML",
           "controlId": "navContainer",
           "controlAggregation": "pages"

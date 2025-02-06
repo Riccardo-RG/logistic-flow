@@ -22,6 +22,10 @@ sap.ui.define([
             } else {
                 oButton.addStyleClass("active"); // Se non è attivo, lo imposta attivo
             }
+        },
+        
+        onNextBP: function() {
+         this.oRouter.navTo("BP-Recherche"); // Navigazione corretta alla view desiderata
         }
     });
 });
