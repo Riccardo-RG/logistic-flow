@@ -1,307 +1,306 @@
-
-
 /* MAIN VIEW STYLESHEET */
 
+.boldLabel {
+  font-weight: bold;
+  color: #333;
+}
+
+.fieldPair {
+  margin-bottom: 30px;
+}
+
 .sapMPage .sapMIBar.sapMHeader-CTX {
-    background-color: #5e7dad;
+  background-color: #5e7dad;
 }
 
 .sapUiBody {
-    background-color: #f5f5f5; /* Example background color */
+  background-color: #f5f5f5; /* Example background color */
 }
 .selectionHeader {
-    color: #5e7dad;
-    padding: 10px;
-    font-size: 22px;
-    font-weight: bold;
+  color: #5e7dad;
+  padding: 10px;
+  font-size: 22px;
+  font-weight: bold;
 }
 
 /* Stile per la lista delle opzioni */
 .optionList {
-    margin-top: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f0f0f0;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f0f0f0;
 }
 
 /* Stile per gli elementi della lista */
 .optionItem {
-    padding: 10px;
-    font-size: 14px;
-    border-bottom: 1px solid #eee;
+  padding: 10px;
+  font-size: 14px;
+  border-bottom: 1px solid #eee;
 }
 
 /* Cambia colore al passaggio del mouse */
 .optionItem:hover {
-    background-color: #f0f0f0;
-    cursor: pointer;
+  background-color: #f0f0f0;
+  cursor: pointer;
 }
 
 .sapMPanelContent {
   padding-bottom: 100%;
-  background-color: #d9d9d9;  
-
+  background-color: #d9d9d9;
 }
 
 /* BP-PREPARATION VIEW STYLESHEET */
 
 /* Stile generale della pagina */
-.bpPreparationPage, .mainPage {
-    background-color: #f5f5f5;
-    height: 100%;
+.bpPreparationPage,
+.mainPage {
+  background-color: #f5f5f5;
+  height: 100%;
 }
 
 /* Stile per i Panel */
 .bpPanel {
-    background-color: white;
-    border-radius: 8px;
-    padding: 15px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  background-color: white;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 /* Contenitore degli input */
 .inputContainer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px;
 }
 
 /* Stile per le etichette "Dossier" e "Option" */
 .inputLabel {
-    font-weight: bold;
-    font-size: 14px;
-    color: #333;
+  font-weight: bold;
+  font-size: 14px;
+  color: #333;
 }
 
 /* Stile per gli input */
 .sapMInput {
-    min-width: 80px;
-    text-align: center;
-    border-radius: 5px;
+  min-width: 80px;
+  text-align: center;
+  border-radius: 5px;
 }
-
 
 /* Stile per la lista delle opzioni */
 .optionList {
-    margin-top: 10px;
-    border-radius: 5px;
-    background-color: white;
-    padding: 5px;
+  margin-top: 10px;
+  border-radius: 5px;
+  background-color: white;
+  padding: 5px;
 }
 
 /* Intestazioni delle liste (EXPEDITION, STOCK) */
 .boldHeader {
-    font-weight: bold;
-    font-size: 16px;
-    color: #333;
-    background-color: #E0E0E0;
-    padding: 8px;
-    border-radius: 5px;
+  font-weight: bold;
+  font-size: 16px;
+  color: #333;
+  background-color: #e0e0e0;
+  padding: 8px;
+  border-radius: 5px;
 }
 
 /* Stile per gli elementi della lista */
 .optionItem {
-    padding: 10px;
-    font-size: 14px;
-    border-bottom: 1px solid #eee;
+  padding: 10px;
+  font-size: 14px;
+  border-bottom: 1px solid #eee;
 }
 
 /* Cambia colore al passaggio del mouse */
 .optionItem:hover {
-    background-color: #f0f0f0;
-    cursor: pointer;
+  background-color: #f0f0f0;
+  cursor: pointer;
 }
 
 /* Stile per la tabella dei BP */
 #bpTable {
-    margin-top: 15px;
-    background-color: white;
-    border-radius: 5px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  margin-top: 15px;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 #bpTable .sapMListTbl {
-    border-collapse: collapse;
-    width: 100%;
+  border-collapse: collapse;
+  width: 100%;
 }
 
 #bpTable .sapMListTbl th {
-    background-color: #E0E0E0;
-    font-weight: bold;
-    text-align: left;
-    padding: 10px;
+  background-color: #e0e0e0;
+  font-weight: bold;
+  text-align: left;
+  padding: 10px;
 }
 
 /* Stile per le righe della tabella */
 #bpTable .sapMListTbl tr {
-    border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
 }
 
 #bpTable .sapMListTbl tr:hover {
-    background-color: #f7f7f7;
+  background-color: #f7f7f7;
 }
 
 /* Stile per l'oggetto selezionato */
 .sapMLIBSelected {
-    background-color: #007AFF;
-    color: white 
+  background-color: #007aff;
+  color: white;
 }
 
 .bpSearchContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
 }
 
 .inputPair {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .bpLabel {
-    width: 60px; /* Fixed width for labels to align inputs */
+  width: 60px; /* Fixed width for labels to align inputs */
 }
 
 .bpButtons {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
 }
 .scrollableTable {
-    margin-top: 12px;
-    max-height: 300px; /* Altezza per 6 risultati */
-    overflow-y: auto;
-    display: block;
-    border : 1px solid #ccc;
-    border-radius: 7px;
+  margin-top: 12px;
+  max-height: 300px; /* Altezza per 6 risultati */
+  overflow-y: auto;
+  display: block;
+  border: 1px solid #ccc;
+  border-radius: 7px;
 }
 
 /* Fissa l'header della table */
 .scrollableTable .sapMListTblHeader {
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    background: white; /* Assicura che l'header abbia uno sfondo */
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: white; /* Assicura che l'header abbia uno sfondo */
 }
-
 
 .bpButton .sapMBtnInner {
-    width: 110px;
-    color: black;
-    border-radius: 0;
-    transition: all 0.3s ease-in-out;
+  width: 110px;
+  color: black;
+  border-radius: 0;
+  transition: all 0.3s ease-in-out;
 }
-
 
 /* Stile per lo stato attivo (quando il pulsante viene cliccato) */
 .bpButton.active .sapMBtnInner {
-    background-color: #5e7dad !important;
-    color: white !important;
-    border-color: #2c3e50 !important;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-    transform: scale(1.1);
+  background-color: #5e7dad !important;
+  color: white !important;
+  border-color: #2c3e50 !important;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+  transform: scale(1.1);
 }
-
 
 /* BP-RECHERCHE VIEW STYLESHEET */
 .greenRow,
 .greenRow .sapMListTblCell {
-    background-color: #dff0d8 !important;  /* Verde chiaro */
+  background-color: #dff0d8 !important; /* Verde chiaro */
 }
 
 .redRow,
 .redRow .sapMListTblCell {
-    background-color: #f2dede !important;  /* Rosso chiaro */
+  background-color: #f2dede !important; /* Rosso chiaro */
 }
 
 /* Center the buttons in the footer */
 
-
-
 .buttonContainerWithGap {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 30px; /* Spazio di 10px tra i bottoni */
-    margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px; /* Spazio di 10px tra i bottoni */
+  margin-top: 10px;
 }
 
 button.sapMBtn.bigButton {
-    font-size: 18px !important;
-    width: 150px !important;
-    height: 50px !important;
-    line-height: 50px !important;
-    padding: 0 20px !important;
-    text-align: center !important;
+  font-size: 18px !important;
+  width: 150px !important;
+  height: 50px !important;
+  line-height: 50px !important;
+  padding: 0 20px !important;
+  text-align: center !important;
 }
 
-
 .marginLeft10 {
-    margin-left: 10px;
+  margin-left: 10px;
 }
 
 /* Imposta un'altezza massima e rende la tabella scrollabile */
 .scrollableTable {
-    max-height: 400px !important; /* Altezza massima */
-    overflow-y: auto !important; /* Scroll verticale */
-    display: block !important; /* Per evitare problemi di layout */
+  max-height: 400px !important; /* Altezza massima */
+  overflow-y: auto !important; /* Scroll verticale */
+  display: block !important; /* Per evitare problemi di layout */
 }
 
 .sapMBtn.bigButton,
 .sapMBtn.bigButton .sapMBtnInner {
-    font-size: 18px !important;
-    width: 150px !important;
-    height: 50px !important;
-    line-height: 50px !important;
-    padding: 0 20px !important;
-    text-align: center !important;
-    min-width: 150px !important;
-    min-height: 50px !important;
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
+  font-size: 18px !important;
+  width: 150px !important;
+  height: 50px !important;
+  line-height: 50px !important;
+  padding: 0 20px !important;
+  text-align: center !important;
+  min-width: 150px !important;
+  min-height: 50px !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
 }
-
 
 .greenRow,
 .greenRow .sapMListTblCell {
-    background-color: #eaf7e0 !important; 
+  background-color: #eaf7e0 !important;
 }
 
 .redRow,
 .redRow .sapMListTblCell {
-    background-color: #f4d6d8 !important; 
+  background-color: #f4d6d8 !important;
 }
 
 .borderedTable {
-    border: 2px solid #5e7dad; /* Bordo nero attorno alla tabella */
-    border-collapse: collapse; /* Unisce i bordi delle celle */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Aggiunge un'ombra alla tabella */
+  border: 2px solid #5e7dad; /* Bordo nero attorno alla tabella */
+  border-collapse: collapse; /* Unisce i bordi delle celle */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Aggiunge un'ombra alla tabella */
 }
 
 .borderedTable .sapMListTblRow {
-    border-bottom: 1px solid #5e7dad; /* Bordo nero tra le righe */
+  border-bottom: 1px solid #5e7dad; /* Bordo nero tra le righe */
 }
 
 .borderedTable .sapMListTblCell {
-    border-right: 1px solid #5e7dad; /* Bordo nero tra le celle */
-    border-bottom: 1px solid #5e7dad; /* Bordo nero tra le righe */
+  border-right: 1px solid #5e7dad; /* Bordo nero tra le celle */
+  border-bottom: 1px solid #5e7dad; /* Bordo nero tra le righe */
 }
 
 .borderedTable .sapMListTblCell:last-child {
-    border-right: none; /* Rimuove il bordo destro dall'ultima cella */
+  border-right: none; /* Rimuove il bordo destro dall'ultima cella */
 }
 
 .borderedTable .sapMListTblRow:last-child .sapMListTblCell {
-    border-bottom: none; /* Rimuove il bordo inferiore dall'ultima riga */
+  border-bottom: none; /* Rimuove il bordo inferiore dall'ultima riga */
 }
 
 .selectedRow {
-    border: 2px solid #5e7dad !important; /* Colore blu per evidenziare */
-    border-radius: 5px; /* Angoli arrotondati */
-    background-color: #e8edf7 !important; /* Leggera evidenziazione */
+  border: 2px solid #5e7dad !important; /* Colore blu per evidenziare */
+  border-radius: 5px; /* Angoli arrotondati */
+  background-color: #e8edf7 !important; /* Leggera evidenziazione */
 }

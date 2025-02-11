@@ -1,31 +1,105 @@
-sap.ui.define([
+sap.ui.define(
+  [
     "sap/ui/core/mvc/Controller",
-    "sap/ui/core/UIComponent"
-], function(Controller, UIComponent) {
+    "sap/ui/core/UIComponent",
+    "sap/ui/model/Filter",
+    "sap/ui/model/FilterOperator",
+  ],
+  function (Controller, UIComponent, Filter, FilterOperator) {
     "use strict";
 
     return Controller.extend("logistic-flow.controller.BP-Preparation", {
-        onInit: function() {
-            this.oRouter = UIComponent.getRouterFor(this);
-        },
-        
-        onNavBack: function() {
-            this.oRouter.navTo("MainView", {}, true);
-        },
+      onInit: function () {
+        this.oRouter = UIComponent.getRouterFor(this);
 
-        onToggleFilter: function(oEvent) {
-            var oButton = oEvent.getSource(); // Ottiene il riferimento al bottone cliccato
-            var bActive = oButton.hasStyleClass("active"); // Controlla se ha già la classe "active"
+        // Event delegate per il click globale
+        this.getView().addEventDelegate({
+          onclick: function (oEvent) {
+            var oTable = this.getView().byId("bpTable");
+            var oTableDom = oTable.getDomRef();
+            var oClickedDom = oEvent.target;
 
-            if (bActive) {
-                oButton.removeStyleClass("active"); // Se è già attivo, rimuove lo stato attivo
-            } else {
-                oButton.addStyleClass("active"); // Se non è attivo, lo imposta attivo
+            // Recupera il riferimento del bottone BP AUTO
+            var oBpAutoButton = this.getView().byId("idBpAutoButton");
+            var oBpAutoDom = oBpAutoButton && oBpAutoButton.getDomRef();
+
+            // Se il click avviene sul BP AUTO (o al suo interno), non eseguire il reset
+            if (oBpAutoDom && oBpAutoDom.contains(oClickedDom)) {
+              return;
             }
-        },
-        
-        onNextBP: function() {
-         this.oRouter.navTo("BP-Recherche"); // Navigazione corretta alla view desiderata
+
+            // Se il click avviene fuori dalla tabella...
+            if (oTableDom && !oTableDom.contains(oClickedDom)) {
+              var aItems = oTable.getItems();
+              aItems.forEach(function (item) {
+                item.setSelected(false);
+              });
+              if (typeof oTable.clearSelection === "function") {
+                oTable.clearSelection();
+              } else if (typeof oTable.setSelectedItem === "function") {
+                oTable.setSelectedItem(null, true);
+              }
+
+              // Nasconde il bottone "detail du client"
+              var oCustomerDetailButton =
+                this.getView().byId("idCustomerDetail");
+              if (oCustomerDetailButton) {
+                oCustomerDetailButton.setVisible(false);
+              }
+
+              // Se il BP AUTO è attivo, rimuove la classe "active" e cancella il filtro
+              if (oBpAutoButton && oBpAutoButton.hasStyleClass("active")) {
+                oBpAutoButton.removeStyleClass("active");
+                oTable.getBinding("items").filter([]);
+              }
+            }
+          }.bind(this),
+        });
+      },
+
+      onNavBack: function () {
+        this.oRouter.navTo("MainView", {}, true);
+      },
+
+      onToggleFilter: function (oEvent) {
+        var oButton = oEvent.getSource(); // Bottone BP AUTO
+        var bActive = oButton.hasStyleClass("active");
+        var oTable = this.getView().byId("bpTable");
+        var oCustomerDetailButton = this.getView().byId("idCustomerDetail");
+        var oSuivantButton = this.getView().byId("idSUIVANTButton");
+
+        if (bActive) {
+          oTable.getBinding("items").filter([]);
+          oButton.removeStyleClass("active");
+          oCustomerDetailButton.setVisible(false);
+          oSuivantButton.setEnabled(false);
+        } else {
+          oTable.getBinding("items").filter([]);
+          oButton.addStyleClass("active");
+          oCustomerDetailButton.setVisible(true);
+          // Impediamo che il bottone Suivant diventi abilitato
+          oSuivantButton.setEnabled(false);
         }
+      },
+      onBPSelected: function (oEvent) {
+        var oCustomerDetailButton = this.getView().byId("idCustomerDetail");
+        oCustomerDetailButton.setVisible(true);
+        var oSuivantButton = this.getView().byId("idSUIVANTButton");
+        oSuivantButton.setEnabled(true);
+      },
+
+      onTestF4Press: function () {
+        this.oRouter.navTo("BP-DoJour");
+      },
+
+      onNextBP: function () {
+        this.oRouter.navTo("BP-RechercheProduit");
+      },
+
+      // Nuovo metodo per navigare alla view DetailDuClient
+      onDetailDuClient: function () {
+        this.oRouter.navTo("DetailDuClient", {}, true);
+      },
     });
-});
+  }
+);

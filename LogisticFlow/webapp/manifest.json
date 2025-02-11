@@ -32,7 +32,7 @@
         "routerClass": "sap.m.routing.Router",
         "viewType": "XML",
         "viewPath": "logistic-flow.view",
-        "controlId": "app",  
+        "controlId": "navContainer",
         "controlAggregation": "pages",
         "async": true
       },
@@ -48,21 +48,26 @@
           "target": "BP-Preparation"
         },
         {
-          "pattern": "BP-Recherche",
-          "name": "BP-Recherche",
-          "target": "BP-Recherche"
+          "pattern": "BP-RechercheProduit",
+          "name": "BP-RechercheProduit",
+          "target": "BP-RechercheProduit"
         },
         {
-          "pattern": "ProductDetail/{productId}",
-          "name": "ProductDetail",
-          "target": "ProductDetail"
+          "pattern": "BP-DoJour",
+          "name": "BP-DoJour",
+          "target": "BP-DoJour"
+        },
+        {
+          "pattern": "DetailDuClient",
+          "name": "DetailDuClient",
+          "target": "DetailDuClient"
         }
       ],
       "targets": {
         "MainView": {
-          "viewName": "MainView",  
+          "viewName": "MainView",
           "viewType": "XML",
-          "controlId": "navContainer",  
+          "controlId": "navContainer",
           "controlAggregation": "pages"
         },
         "BP-Preparation": {
@@ -71,16 +76,22 @@
           "controlId": "navContainer",
           "controlAggregation": "pages"
         },
-        "BP-Recherche": {
-          "viewName": "BP-Recherche",
+        "BP-RechercheProduit": {
+          "viewName": "BP-RechercheProduit",
           "viewType": "XML",
           "controlId": "navContainer",
           "controlAggregation": "pages"
         },
-        "ProductDetail": {
-          "viewName": "ProductDetail",
+        "BP-DoJour": {
+          "viewName": "BP-DoJour",
           "viewType": "XML",
-          "controlId": "navContainer", 
+          "controlId": "navContainer",
+          "controlAggregation": "pages"
+        },
+        "DetailDuClient": {
+          "viewName": "DetailDuClient",
+          "viewType": "XML",
+          "controlId": "navContainer",
           "controlAggregation": "pages"
         }
       }

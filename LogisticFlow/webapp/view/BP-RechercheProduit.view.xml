@@ -1,9 +1,7 @@
 <mvc:View xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
-    xmlns:core="sap.ui.core"
-    xmlns:icon="sap.ui.core.IconPool" controllerName="logistic-flow.controller.BP-Recherche">
+    xmlns:core="sap.ui.core" controllerName="logistic-flow.controller.BP-RechercheProduit">
 
-    <!-- Aggiungi showNavButton e navButtonPress per abilitare il nav back -->
     <Page title="DD - Préparation BP" showNavButton="true" navButtonPress="onNavBack">
         <content>
             <Panel class="bpPanel">
@@ -16,35 +14,44 @@
                         </buttons>
                     </RadioButtonGroup>
                     <SearchField id="bpSearchField" width="100%" placeholder="Rechercher..." liveChange="onSearch" />
+
                     <Table id="bpTable" items="{/BPRechercheData}" class="borderedTable scrollableTable">
                         <columns>
-                            <Column width="3em">
+                            <Column width="3em" hAlign="Center">
                                 <Text text="Pr" />
                             </Column>
-                            <Column width="5em">
+                            <Column width="5em" hAlign="Center">
                                 <Text text="Code" />
                             </Column>
                             <Column width="15em">
                                 <Text text="Libellé" />
                             </Column>
+                                <Column width="5em" hAlign="Center">
+                                <Text text="Test" />
+                            </Column>
+                                <Column width="5em" hAlign="Center">
+                                <Text text="Test1" />
+                            </Column>
+                                <Column width="5em" hAlign="Center">
+                                <Text text="Test2" />
+                            </Column>
                         </columns>
                         <items>
-                            <ColumnListItem type="Active" press="onRowSelect">
+                            <ColumnListItem type="Active" press="onRowSelect" selectable="true">
                                 <cells>
-                                    <Text text="{Pr}" />
-                                    <Text text="{BP}" />
+                                    <Label text="✔" visible="{pr}" class="sapUiAlignCenter" />
+                                    <Text text="{BP}" class="sapUiAlignCenter" />
                                     <Text text="{NomClient}" />
+                                    
                                 </cells>
                             </ColumnListItem>
                         </items>
                     </Table>
 
-
                     <HBox class="buttonContainerWithGap" width="100%" justifyContent="Center" alignItems="Center">
                         <Button text="Annuler" type="Default" press="onCancel" class="bigButton annulerButton"/>
                         <Button text="Valider" type="Emphasized" press="onValidate" class="bigButton validerButton"/>
                     </HBox>
-
                 </VBox>
             </Panel>
         </content>

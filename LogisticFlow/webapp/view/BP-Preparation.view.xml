@@ -13,6 +13,11 @@
                 </headerToolbar>
                 <VBox>
                     <VBox class="bpSearchContainer">
+                        <!-- Bottone detail du client, inizialmente nascosto -->
+                        <HBox justifyContent="End">
+                            <!-- Modifica qui: il press ora richiama onDetailDuClient -->
+                            <Button id="idCustomerDetail" text="detail du client ➡" press="onDetailDuClient" type="Transparent" visible="false" />
+                        </HBox>
                         <HBox class="inputPair">
                             <Label text="Dépôt:" class="bpLabel"/>
                             <Input id="depotInput" value="1" width="50px"/>
@@ -23,9 +28,8 @@
                         </HBox>
                     </VBox>
                     <HBox class="bpButtons">
-                        <!-- Assegno un ID per poter aggiungere uno style class quando viene applicato il filtro -->
                         <Button id="idBpAutoButton" text="BP AUTO" press="onToggleFilter" class="bpButton" />
-                        <Button text="SUIVANT" press="onNextBP" class="bpButton"/>
+                        <Button id="idSUIVANTButton" text="SUIVANT" press="onNextBP" enabled="false" class="bpButton"/>
                     </HBox>
                     <Table id="bpTable" mode="SingleSelectMaster" selectionChange="onBPSelected" class="scrollableTable" items="{/BPData}">
                         <columns>
@@ -56,6 +60,9 @@
                         </items>
                     </Table>
                 </VBox>
+                <HBox class="bpButtons">
+                    <Button text="test - f4" press="onTestF4Press" />
+                </HBox>
             </Panel>
         </content>
     </Page>
