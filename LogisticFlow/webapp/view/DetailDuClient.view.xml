@@ -4,29 +4,34 @@
   xmlns:layout="sap.ui.layout.form" displayBlock="true">
 
   <Page title="DETAIL DU CLIENT" class="bpPreparationPage" showNavButton="true" navButtonPress=".onNavBack">
-    <content>
-      <Panel class="bpPanel">
-        <layout:SimpleForm id="simpleFormDetailDuClient" editable="true" layout="ResponsiveGridLayout">
+    <content >
+      <Panel class="bpPanel" >
+        <layout:SimpleForm id="simpleFormDetailDuClient" editable="false" layout="ResponsiveGridLayout" class="sapUiLargeMarginTop">
           
           <VBox class="fieldPair">
             <Label text="LINER" class="boldLabel" />
-            <Input value="OUI" id="inputLiner" class="sapUiSmallMarginBottom" />
+            <Text id="textLiner" text="OUI" class="sapUiSmallMarginBottom"/>
           </VBox>
 
           <VBox class="fieldPair">
             <Label text="SANS DLU" class="boldLabel" />
-            <Input id="inputSansDlu" placeholder="Inserisci testo..." class="sapUiSmallMarginBottom" />
+            <Text id="textSansDlu" text=" - " class="sapUiSmallMarginBottom"/>
           </VBox>
 
           <VBox class="fieldPair">
             <Label text="LISTE DE COLISAGE" class="boldLabel" />
-            <Input id="inputListeDeColisage" value="OUI" class="boldLabel" />
+            <Text id="textListeDeColisage" text="OUI" />
           </VBox>
 
           <VBox class="fieldPair">
             <Label text="COMMENTARIES" class="boldLabel"/>
-            <TextArea id="textareaCommentaires" rows="10" width="100%" class="boldLabel" 
-              value="PAL120*120 NON EUROPE COMPLETE METRE DOC RECAP DES PRUDIOTS SUR CHAQUE PALETTE RESPECTER ... PAL120*120 NON EUROPE COMPLETE METRE DOC RECAP DES PRUDIOTS SUR CHAQUE PALETTE RESPECTER ... PAL120*120 NON EUROPE COMPLETE METRE DOC RECAP DES PRUDIOTS SUR CHAQUE PALETTE RESPECTER ...PAL120*120 NON EUROPE COMPLETE METRE DOC RECAP DES PRUDIOTS SUR CHAQUE PALETTE RESPECTER ...PAL120*120 NON EUROPE COMPLETE METRE DOC RECAP DES PRUDIOTS SUR CHAQUE PALETTE RESPECTER ...PAL120*120 NON EUROPE COMPLETE METRE DOC RECAP DES PRUDIOTS SUR CHAQUE PALETTE RESPECTER ..." />
+            <TextArea id="textareaCommentaires" rows="10" width="100%" class="boldLabel" editable="false"
+              value="PAL120*120 NON EUROPE COMPLETE METRE DOC RECAP DES PRUDIOTS SUR CHAQUE PALETTE RESPECTER ... 
+PAL120*120 NON EUROPE COMPLETE METRE DOC RECAP DES PRUDIOTS SUR CHAQUE PALETTE RESPECTER ... 
+PAL120*120 NON EUROPE COMPLETE METRE DOC RECAP DES PRUDIOTS SUR CHAQUE PALETTE RESPECTER ... 
+PAL120*120 NON EUROPE COMPLETE METRE DOC RECAP DES PRUDIOTS SUR CHAQUE PALETTE RESPECTER ... 
+PAL120*120 NON EUROPE COMPLETE METRE DOC RECAP DES PRUDIOTS SUR CHAQUE PALETTE RESPECTER ... 
+PAL120*120 NON EUROPE COMPLETE METRE DOC RECAP DES PRUDIOTS SUR CHAQUE PALETTE RESPECTER ..." />
           </VBox>
 
         </layout:SimpleForm>

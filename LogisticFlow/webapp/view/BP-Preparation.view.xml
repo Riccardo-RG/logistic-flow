@@ -1,16 +1,10 @@
 <mvc:View xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m" controllerName="logistic-flow.controller.BP-Preparation">
 
-    <Page title="DD - Préparation BP" class="bpPreparationPage">
+    <Page title="DD - Préparation BP" class="bpPreparationPage" showNavButton="true" navButtonPress=".onNavBack">
         <content>
             <Panel class="bpPanel">
-                <headerToolbar>
-                    <Toolbar>
-                        <Button text="⬅ En arrière" press="onNavBack" type="Transparent" />
-                        <ToolbarSpacer/>
-                        <Title text="Saisie des préparations" level="H2"/>
-                    </Toolbar>
-                </headerToolbar>
+    
                 <VBox>
                     <VBox class="bpSearchContainer">
                         <!-- Bottone detail du client, inizialmente nascosto -->
@@ -61,7 +55,7 @@
                     </Table>
                 </VBox>
                 <HBox class="bpButtons">
-                    <Button text="test - f4" press="onTestF4Press" />
+                    <Button text="Complete list" press="onTestF4Press" />
                 </HBox>
             </Panel>
         </content>

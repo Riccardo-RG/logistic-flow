@@ -128,6 +128,10 @@ sap.ui.define(
         // Aggiunge la classe CSS alla riga selezionata
         oSelectedItem.addStyleClass("selectedRow");
       },
+
+      onTestScan: function () {
+        this.oRouter.navTo("PrepareProduit");
+      },
     });
   }
 );

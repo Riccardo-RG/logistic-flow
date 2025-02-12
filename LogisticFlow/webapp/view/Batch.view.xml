@@ -1,0 +1,68 @@
+<mvc:View controllerName="logistic-flow.controller.Batch"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page title="Saisie des préparations" showNavButton="true" navButtonPress="onNavBack">
+        <content>
+            <Panel class="bpPanel">
+                <VBox>
+                    <Title text="Saisie" level="H2" class="sapUiSmallMarginTop"/>
+
+                    <FlexBox direction="Column" class="borderedBox" alignItems="Stretch" justifyContent="Start">
+                        <HBox alignItems="Center" class="sapUiSmallMarginBottom">
+                            <Label text="Produit:" width="150px" class="boldLabel"/>
+                            <Text text="GCI BLANC S9016 VB40 IHB"/>
+                        </HBox>
+                  
+                        <HBox alignItems="Center" class="sapUiSmallMarginBottom">
+                            <Label text="Liner:" width="150px" class="boldLabel"/>
+                            <Text text="OUI"/>
+                        </HBox>
+
+                        <HBox alignItems="Center" class="sapUiSmallMarginBottom">
+                            <Label text="U/C:" width="150px" class="boldLabel"/>
+                            <Text text="2 x SEAU EXPORT 25KG"/>
+                        </HBox>
+
+                        <HBox alignItems="Center" class="sapUiSmallMarginBottom">
+                            <Label text="Qtè à prèparer:" width="150px" class="boldLabel"/>
+                            <Text text="50.000"/>
+                        </HBox>
+
+                        <HBox alignItems="Center" class="sapUiSmallMarginBottom">
+                            <Label text="Qtè dèjà prèparèe:" width="150px" class="boldLabel"/>
+                            <Text text="49.500"/>
+                        </HBox>
+
+                        <HBox alignItems="Center" class="sapUiSmallMarginBottom">
+                            <Label text="Quantité:" width="150px" class="boldLabel"/>
+                            <Input width="60%"/>
+                        </HBox>
+
+                        <HBox alignItems="Center" class="sapUiSmallMarginBottom">
+                            <Label text="Lot proposé:" width="150px" class="boldLabel"/>
+                            <Input width="60%"/>
+                        </HBox>
+
+                        <HBox alignItems="Center" class="sapUiSmallMarginBottom">
+                            <Label text="Qtè du lot:" width="150px" class="boldLabel"/>
+                            <Input width="60%"/>
+                        </HBox>
+
+                        <HBox alignItems="Center" class="sapUiSmallMarginBottom">
+                            <Label text="Lot:" width="150px" class="boldLabel"/>
+                            <Input width="60%"/>
+                        </HBox>
+
+                        <HBox alignItems="Center" class="sapUiSmallMarginBottom">
+                            <Label text="Nb collis:" width="100px" class="boldLabel"/>
+                            <Input width="30%"/>
+                            <Label text="NB° BP:" width="100px" class="boldLabel"/>
+                            <Input width="30%"/>
+                        </HBox>
+                   </FlexBox>
+
+                </VBox>
+            </Panel>
+        </content>
+    </Page>
+</mvc:View>

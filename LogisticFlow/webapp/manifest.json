@@ -5,7 +5,8 @@
     "type": "application",
     "applicationVersion": {
       "version": "0.0.1"
-    }
+    },
+    "i18n": "i18n/i18n.properties"
   },
   "sap.ui5": {
     "dependencies": {
@@ -17,9 +18,10 @@
     },
     "models": {
       "": {
-        "type": "sap.ui.model.json.JSONModel",
-        "uri": "model/data.json",
-        "settings": {}
+        "dataSource": "mainService",
+        "settings": {
+          "preload": true
+        }
       }
     },
     "rootView": {
@@ -61,6 +63,16 @@
           "pattern": "DetailDuClient",
           "name": "DetailDuClient",
           "target": "DetailDuClient"
+        },
+        {
+          "pattern": "PrepareProduit",
+          "name": "PrepareProduit",
+          "target": "PrepareProduit"
+        },
+        {
+          "pattern": "Batch",
+          "name": "Batch",
+          "target": "Batch"
         }
       ],
       "targets": {
@@ -90,6 +102,18 @@
         },
         "DetailDuClient": {
           "viewName": "DetailDuClient",
+          "viewType": "XML",
+          "controlId": "navContainer",
+          "controlAggregation": "pages"
+        },
+        "PrepareProduit": {
+          "viewName": "PrepareProduit",
+          "viewType": "XML",
+          "controlId": "navContainer",
+          "controlAggregation": "pages"
+        },
+        "Batch": {
+          "viewName": "Batch",
           "viewType": "XML",
           "controlId": "navContainer",
           "controlAggregation": "pages"
