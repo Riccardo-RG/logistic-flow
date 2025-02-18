@@ -5,7 +5,8 @@
     "type": "application",
     "applicationVersion": {
       "version": "0.0.1"
-    }
+    },
+    "i18n": "i18n/i18n.properties"
   },
   "sap.ui5": {
     "dependencies": {
@@ -17,9 +18,10 @@
     },
     "models": {
       "": {
-        "type": "sap.ui.model.json.JSONModel",
-        "uri": "model/data.json",
-        "settings": {}
+        "dataSource": "mainService",
+        "settings": {
+          "preload": true
+        }
       }
     },
     "rootView": {
@@ -32,7 +34,7 @@
         "routerClass": "sap.m.routing.Router",
         "viewType": "XML",
         "viewPath": "logistic-flow.view",
-        "controlId": "app",  
+        "controlId": "navContainer",
         "controlAggregation": "pages",
         "async": true
       },
@@ -48,21 +50,36 @@
           "target": "BP-Preparation"
         },
         {
-          "pattern": "BP-Recherche",
-          "name": "BP-Recherche",
-          "target": "BP-Recherche"
+          "pattern": "BP-RechercheProduit",
+          "name": "BP-RechercheProduit",
+          "target": "BP-RechercheProduit"
         },
         {
-          "pattern": "ProductDetail/{productId}",
-          "name": "ProductDetail",
-          "target": "ProductDetail"
+          "pattern": "BP-DoJour",
+          "name": "BP-DoJour",
+          "target": "BP-DoJour"
+        },
+        {
+          "pattern": "DetailDuClient",
+          "name": "DetailDuClient",
+          "target": "DetailDuClient"
+        },
+        {
+          "pattern": "PrepareProduit",
+          "name": "PrepareProduit",
+          "target": "PrepareProduit"
+        },
+        {
+          "pattern": "Batch",
+          "name": "Batch",
+          "target": "Batch"
         }
       ],
       "targets": {
         "MainView": {
-          "viewName": "MainView",  
+          "viewName": "MainView",
           "viewType": "XML",
-          "controlId": "navContainer",  
+          "controlId": "navContainer",
           "controlAggregation": "pages"
         },
         "BP-Preparation": {
@@ -71,16 +88,34 @@
           "controlId": "navContainer",
           "controlAggregation": "pages"
         },
-        "BP-Recherche": {
-          "viewName": "BP-Recherche",
+        "BP-RechercheProduit": {
+          "viewName": "BP-RechercheProduit",
           "viewType": "XML",
           "controlId": "navContainer",
           "controlAggregation": "pages"
         },
-        "ProductDetail": {
-          "viewName": "ProductDetail",
+        "BP-DoJour": {
+          "viewName": "BP-DoJour",
           "viewType": "XML",
-          "controlId": "navContainer", 
+          "controlId": "navContainer",
+          "controlAggregation": "pages"
+        },
+        "DetailDuClient": {
+          "viewName": "DetailDuClient",
+          "viewType": "XML",
+          "controlId": "navContainer",
+          "controlAggregation": "pages"
+        },
+        "PrepareProduit": {
+          "viewName": "PrepareProduit",
+          "viewType": "XML",
+          "controlId": "navContainer",
+          "controlAggregation": "pages"
+        },
+        "Batch": {
+          "viewName": "Batch",
+          "viewType": "XML",
+          "controlId": "navContainer",
           "controlAggregation": "pages"
         }
       }
