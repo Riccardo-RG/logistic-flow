@@ -23,8 +23,16 @@ sap.ui.define(
             var oBpAutoButton = this.getView().byId("idBpAutoButton");
             var oBpAutoDom = oBpAutoButton && oBpAutoButton.getDomRef();
 
-            // Se il click avviene sul BP AUTO (o al suo interno), non eseguire il reset
-            if (oBpAutoDom && oBpAutoDom.contains(oClickedDom)) {
+            // Recupera il riferimento del bottone detail du client
+            var oCustomerDetailButton = this.getView().byId("idCustomerDetail");
+            var oCustomerDetailDom =
+              oCustomerDetailButton && oCustomerDetailButton.getDomRef();
+
+            // Se il click avviene sul BP AUTO oppure sul detail du client (o all'interno di essi), non eseguire il reset
+            if (
+              (oBpAutoDom && oBpAutoDom.contains(oClickedDom)) ||
+              (oCustomerDetailDom && oCustomerDetailDom.contains(oClickedDom))
+            ) {
               return;
             }
 
@@ -41,8 +49,6 @@ sap.ui.define(
               }
 
               // Nasconde il bottone "detail du client"
-              var oCustomerDetailButton =
-                this.getView().byId("idCustomerDetail");
               if (oCustomerDetailButton) {
                 oCustomerDetailButton.setVisible(false);
               }
@@ -76,11 +82,13 @@ sap.ui.define(
         } else {
           oTable.getBinding("items").filter([]);
           oButton.addStyleClass("active");
-          oCustomerDetailButton.setVisible(true);
+          // Assicurati che il bottone "detail du client" resti nascosto
+          oCustomerDetailButton.setVisible(false);
           // Impediamo che il bottone Suivant diventi abilitato
           oSuivantButton.setEnabled(false);
         }
       },
+
       onBPSelected: function (oEvent) {
         var oCustomerDetailButton = this.getView().byId("idCustomerDetail");
         oCustomerDetailButton.setVisible(true);
@@ -96,7 +104,7 @@ sap.ui.define(
         this.oRouter.navTo("BP-RechercheProduit");
       },
 
-      // Nuovo metodo per navigare alla view DetailDuClient
+      // Metodo per navigare alla view DetailDuClient
       onDetailDuClient: function () {
         this.oRouter.navTo("DetailDuClient", {}, true);
       },
