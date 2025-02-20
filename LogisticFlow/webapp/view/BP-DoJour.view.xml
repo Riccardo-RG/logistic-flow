@@ -1,48 +1,60 @@
 <mvc:View xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
-    xmlns:core="sap.ui.core"
-    xmlns:icon="sap.ui.core.IconPool" controllerName="logistic-flow.controller.BP-DoJour">
+    xmlns:core="sap.ui.core" controllerName="logistic-flow.controller.BP-DoJour">
 
-    <!-- Aggiungi showNavButton e navButtonPress per abilitare il nav back -->
-    <Page title="DD - Préparation BP" showNavButton="true" navButtonPress="onNavBack">
+    <Page title="Recherche Bon De Prèparation" showNavButton="true" navButtonPress="onNavBack">
+
         <content>
             <Panel class="bpPanel">
-                <VBox class="sapUiSmallMargin">
-                    <Title text="Recherche Bon De Prèparation" />
+                <VBox >
+
                     <RadioButtonGroup select="onSelectionChange" columns="2">
                         <buttons>
                             <RadioButton text="N° BP" selected="true" />
                             <RadioButton text="Rèf.Commande" />
                         </buttons>
                     </RadioButtonGroup>
+
                     <SearchField id="bpSearchField" width="100%" placeholder="Rechercher..." liveChange="onSearch" />
+
+                    <!-- Barra degli strumenti con tre pulsanti di sorting -->
+                    <Toolbar class="toolbarDojur">
+                        <ToolbarSpacer />
+                        <Button text="Date ASC" icon="sap-icon://sort-ascending" press="onSortAsc" />
+                        <Button text="Date DESC" icon="sap-icon://sort-descending" press="onSortDesc" />
+                        <Button text="Rinitialisert" icon="sap-icon://undo" press="onSortReset" />
+                    </Toolbar>
+
                     <Table id="bpTable" items="{/BPRechercheData}" class="borderedTable scrollableTable">
+
                         <columns>
+                            <Column width="5em">
+                                <Text text="Date" />
+                            </Column>
                             <Column width="3em">
                                 <Text text="BP" />
-                            </Column>
-                            <Column width="5em">
-                                <Text text="Client" />
                             </Column>
                             <Column width="15em">
                                 <Text text="Nom client" />
                             </Column>
                             <Column width="5em">
-                                <Text text="Date" />
+                                <Text text="Code Client" />
                             </Column>
 
                         </columns>
+
                         <items>
                             <ColumnListItem type="Active" press="onRowSelect">
                                 <cells>
-                                    <!-- <Text text="{Pr}" />
+                                    <Text text="{date}" />
                                     <Text text="{BP}" />
-                                    <Text text="{NomClient}" /> -->
+                                    <Text text="{NomClient}" />
+                                    <Text text="{CodeClient}" />
+
                                 </cells>
                             </ColumnListItem>
                         </items>
                     </Table>
-
 
                     <HBox class="buttonContainerWithGap" width="100%" justifyContent="Center" alignItems="Center">
                         <Button text="Annuler" type="Default" press="onCancel" class="bigButton annulerButton"/>

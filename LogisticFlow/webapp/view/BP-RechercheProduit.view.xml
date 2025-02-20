@@ -2,11 +2,12 @@
     xmlns="sap.m"
     xmlns:core="sap.ui.core" controllerName="logistic-flow.controller.BP-RechercheProduit">
 
-    <Page title="DD - Préparation BP" showNavButton="true" navButtonPress="onNavBack">
+    <Page title="Recherche Produit avec préaffectations" showNavButton="true" navButtonPress="onNavBack">
+
         <content>
             <Panel class="bpPanel">
-                <VBox class="sapUiSmallMargin">
-                    <Title text="Recherche Produit avec préaffectations" />
+                <VBox >
+
                     <RadioButtonGroup select="onSelectionChange" columns="2">
                         <buttons>
                             <RadioButton text="Code" selected="true" />
@@ -15,7 +16,7 @@
                     </RadioButtonGroup>
                     <SearchField id="bpSearchField" width="100%" placeholder="Rechercher..." liveChange="onSearch" />
 
-                    <Table id="bpTable" items="{/BPRechercheData}" class="borderedTable scrollableTable">
+                    <Table id="bpTable" items="{/BPRechercheData}" class="borderedTable scrollableTable sapUiSmallMarginTop">
                         <columns>
                             <Column width="3em" hAlign="Center">
                                 <Text text="Pr" />

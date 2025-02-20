@@ -13,16 +13,33 @@
   margin-right: 50px;
 }
 
-/* Allinea centralmente i tab dell'IconTabBar */
-.customIconTabBar .sapMITBHead {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+/* 🔹 Se l'icona SVG viene colorata automaticamente */
+.customIconTabBar .sapMITBFilterIcon .sapUiIcon {
+  fill: black !important; /* Forza il colore */
+  background: none !important;
+  border: none !important;
 }
 
-/* Aggiunge margine orizzontale ai tab per spaziarli */
-.customIconTabBar .sapMITBTab {
-  margin: 0 10px;
+/* 🔹 Forza la dimensione delle icone SVG nei tab */
+.customIconTabBar .sapMITBFilterIcon {
+  width: 26px !important;
+  height: 26px !important;
+}
+
+/* 🔹 Riduzione dell'altezza della testata della tab bar */
+.customIconTabBar .sapMITBHead {
+  display: flex !important;
+  justify-content: center !important;
+  gap: 2.3rem !important; /* Aumenta il valore se serve più spazio */
+  height: 32px !important;
+  min-height: 55px !important;
+}
+
+/* 🔹 Riduzione dell'altezza dei tab */
+.customIconTabBar .sapMITBFilter {
+  margin: 0 30px !important; /* Aumenta il valore per più distanza */
+  height: 32px !important;
+  line-height: 32px !important;
 }
 
 .borderedBox {
@@ -82,18 +99,27 @@
 
 /* BP-PREPARATION VIEW STYLESHEET */
 
+.toolbarDojur {
+  background: none !important;
+  background-color: transparent !important;
+  margin-bottom: 15px;
+  margin-top: 2px;
+}
 /* Stile generale della pagina */
 .bpPreparationPage,
 .mainPage {
-  background-color: #f5f5f5;
-  height: 100%;
+  background-color: #d9d9d9;
+}
+
+.sapMBtnBack {
+  margin-right: 100px; /* imposta il margine a tuo piacere */
 }
 
 /* Stile per i Panel */
 .bpPanel {
   background-color: white;
   border-radius: 8px;
-  padding: 15px;
+  padding: 0 5px 5px 5px;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
@@ -151,35 +177,6 @@
   cursor: pointer;
 }
 
-/* Stile per la tabella dei BP */
-#bpTable {
-  margin-top: 15px;
-  background-color: white;
-  border-radius: 5px;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-#bpTable .sapMListTbl {
-  border-collapse: collapse;
-  width: 100%;
-}
-
-#bpTable .sapMListTbl th {
-  background-color: #e0e0e0;
-  font-weight: bold;
-  text-align: left;
-  padding: 10px;
-}
-
-/* Stile per le righe della tabella */
-#bpTable .sapMListTbl tr {
-  border-bottom: 1px solid #ddd;
-}
-
-#bpTable .sapMListTbl tr:hover {
-  background-color: #f7f7f7;
-}
-
 /* Stile per l'oggetto selezionato */
 .sapMLIBSelected {
   background-color: #007aff;
@@ -187,20 +184,20 @@
 }
 
 .bpSearchContainer {
+  margin-top: 15px;
+  margin-bottom: 10px;
   display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 10px;
+  justify-content: center; /* Centra gli elementi orizzontalmente */
+  align-items: center;
+  gap: 80px; /* Spazio tra gli elementi */
+  width: 100%;
 }
 
 .inputPair {
   display: flex;
   align-items: center;
-  gap: 10px;
-}
-
-.bpLabel {
-  width: 60px; /* Fixed width for labels to align inputs */
+  gap: 20px; /* Distanza tra label e input */
+  justify-content: center; /* Centra la coppia Label + Input */
 }
 
 .bpButtons {
@@ -208,21 +205,34 @@
   justify-content: space-between;
   padding: 10px;
 }
+
 .scrollableTable {
-  margin-top: 12px;
-  max-height: 300px; /* Altezza per 6 risultati */
+  overflow-x: auto;
   overflow-y: auto;
-  display: block;
   border: 1px solid #ccc;
   border-radius: 7px;
 }
 
-/* Fissa l'header della table */
+.tabContent {
+  padding: 5px;
+}
+.scrollableTable table {
+  width: 100% !important; /* La tabella riempie tutto il contenitore */
+  min-width: 800px; /* Sotto 800px di schermo -> scatta lo scroll orizz. */
+  min-height: 700px;
+}
+
 .scrollableTable .sapMListTblHeader {
-  position: sticky;
   top: 0;
-  z-index: 10;
-  background: white; /* Assicura che l'header abbia uno sfondo */
+  background: white;
+}
+
+.scrollableTable td:nth-child(4), /* Client */
+.scrollableTable td:nth-child(5) /* Description transporteur */ {
+  max-width: 300px; /* Imposta una larghezza massima per evitare celle troppo larghe */
+  white-space: normal; /* Permette il wrapping del testo */
+  word-wrap: break-word; /* Rompe il testo se necessario */
+  overflow: visible; /* Evita il taglio del testo */
 }
 
 .orderButton .sapMBtnInner {
@@ -232,7 +242,6 @@
   transition: all 0.3s ease-in-out;
 }
 
-/* Stile per lo stato attivo (quando il pulsante viene cliccato) */
 .orderButton.active .sapMBtnInner {
   background-color: #5e7dad !important;
   color: white !important;
@@ -277,9 +286,12 @@ button.sapMBtn.bigButton {
 
 /* Imposta un'altezza massima e rende la tabella scrollabile */
 .scrollableTable {
-  max-height: 400px !important; /* Altezza massima */
-  overflow-y: auto !important; /* Scroll verticale */
-  display: block !important; /* Per evitare problemi di layout */
+  overflow-x: auto;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  border-radius: 7px;
+  max-height: 450px;
+  height: auto;
 }
 
 .sapMBtn.bigButton,
@@ -311,6 +323,7 @@ button.sapMBtn.bigButton {
   border: 2px solid #5e7dad; /* Bordo nero attorno alla tabella */
   border-collapse: collapse; /* Unisce i bordi delle celle */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Aggiunge un'ombra alla tabella */
+  min-height: 500px;
 }
 
 .borderedTable .sapMListTblRow {

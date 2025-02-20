@@ -1,10 +1,15 @@
 <mvc:View xmlns:mvc="sap.ui.core.mvc"
-    xmlns="sap.m" controllerName="logistic-flow.controller.PrepareProduit">
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core" controllerName="logistic-flow.controller.PrepareProduit">
 
     <Page title="Saisie des préparations" showNavButton="true" navButtonPress="onNavBack">
+
         <content>
             <Panel class="bpPanel">
+                <core:Fragment fragmentName="logistic-flow.fragment.IconTabBar" type="XML"/>
+
                 <VBox>
+
                     <Title text="Recherche" level="H2" class="sapUiSmallMarginTop"/>
 
                     <FlexBox direction="Column" class="borderedBox" alignItems="Stretch" justifyContent="Start">

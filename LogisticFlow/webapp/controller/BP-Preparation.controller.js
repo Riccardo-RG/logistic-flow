@@ -4,19 +4,35 @@ sap.ui.define(
     "sap/ui/core/UIComponent",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
+    "sap/ui/core/IconPool",
   ],
-  function (Controller, UIComponent, Filter, FilterOperator) {
+  function (Controller, UIComponent, Filter, FilterOperator, IconPool) {
     "use strict";
 
     return Controller.extend("logistic-flow.controller.BP-Preparation", {
       onInit: function () {
+        // Inizializzo il router
         this.oRouter = UIComponent.getRouterFor(this);
+
+        // 🔹 Registrazione delle icone personalizzate
+        IconPool.addIcon("custom-top-bar", "custom", {
+          fontFamily: "SAP-icons",
+          content: "¯¯",
+        });
+        IconPool.addIcon("custom-middle-bar", "custom", {
+          fontFamily: "SAP-icons",
+          content: "––",
+        });
+        IconPool.addIcon("custom-bottom-bar", "custom", {
+          fontFamily: "SAP-icons",
+          content: "__",
+        });
 
         // Event delegate per il click globale
         this.getView().addEventDelegate({
           onclick: function (oEvent) {
             var oTable = this.getView().byId("bpTable");
-            var oTableDom = oTable.getDomRef();
+            var oTableDom = oTable && oTable.getDomRef();
             var oClickedDom = oEvent.target;
 
             // Recupera il riferimento del bottone BP AUTO
@@ -28,7 +44,7 @@ sap.ui.define(
             var oCustomerDetailDom =
               oCustomerDetailButton && oCustomerDetailButton.getDomRef();
 
-            // Se il click avviene sul BP AUTO oppure sul detail du client (o all'interno di essi), non eseguire il reset
+            // Se il click avviene sul BP AUTO oppure su detail du client, non eseguire il reset
             if (
               (oBpAutoDom && oBpAutoDom.contains(oClickedDom)) ||
               (oCustomerDetailDom && oCustomerDetailDom.contains(oClickedDom))

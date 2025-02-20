@@ -1,83 +1,86 @@
 <mvc:View controllerName="logistic-flow.controller.BP-Preparation"
     xmlns:mvc="sap.ui.core.mvc"
-    xmlns="sap.m">
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
 
     <Page id="pageBPPreparation" title="DD - Préparation BP" class="bpPreparationPage" showNavButton="true" navButtonPress=".onNavBack">
+
         <content>
-            <!-- IconTabBar per gestire i 3 livelli / sezioni -->
-            <IconTabBar id="idTabBar" class="bpTabBar customIconTabBar" selectedKey="tab1" expandSelectList="true" select=".onTabSelect">
-                <items>
-                    <!-- Primo Tab -->
-                    <IconTabFilter key="tab1" text="¯¯">
-                        <VBox class="tabContent">
-                            <!-- Sezione di ricerca -->
-                            <VBox class="bpSearchContainer">
-                                <!-- Eventuale pulsante “INFO CLIENT” da mostrare/nascondere -->
-                                <HBox justifyContent="End">
-                                    <!-- Inizialmente vuoto o pulsante nascosto -->
-                                </HBox>
-                                <HBox class="inputPair">
-                                    <Label text="Dépôt:" class="bpLabel"/>
-                                    <Input id="depotInput" value="1" width="50px"/>
-                                </HBox>
-                                <HBox class="inputPair">
-                                    <Label text="BP:" class="bpLabel"/>
-                                    <Input id="bpInput" placeholder="BP nombre..." liveChange="onSearchBP"/>
-                                </HBox>
-                            </VBox>
+            <VBox class="tabContent">
+                <core:Fragment fragmentName="logistic-flow.fragment.IconTabBar" type="XML"/>
 
-                            <!-- Bottoni in riga con SpaceAround -->
-                            <HBox class="bpButtons" justifyContent="SpaceAround">
-                                <Button id="idBpAutoButton" text="BP AUTO" press="onToggleFilter" class="orderButton" />
-                                <Button text="Liste complète" press="onTestF4Press" class="orderButton" />
-                            </HBox>
+                <HBox class="bpSearchContainer" justifyContent="Center">
+                    <HBox class="inputPair">
+                        <Label text="Dépôt:" class="boldLabel"/>
+                        <Input id="depotInput" value="1" width="50px"/>
+                    </HBox>
+                    <HBox class="inputPair">
+                        <Label text="BP:" class="boldLabel"/>
+                        <Input id="bpInput" placeholder="Nombre" liveChange="onSearchBP" width="60px"/>
+                    </HBox>
+                </HBox>
 
-                            <!-- Tabella dati -->
-                            <Table id="bpTable" mode="SingleSelectMaster" selectionChange="onBPSelected" class="scrollableTable" items="{/BPData}">
-                                <columns>
-                                    <Column>
-                                        <header>
-                                            <Text text="N° BP"/>
-                                        </header>
-                                    </Column>
-                                    <Column>
-                                        <header>
-                                            <Text text="Client"/>
-                                        </header>
-                                    </Column>
-                                    <Column>
-                                        <header>
-                                            <Text text="Transporteur"/>
-                                        </header>
-                                    </Column>
-                                </columns>
-                                <items>
-                                    <ColumnListItem>
-                                        <cells>
-                                            <ObjectIdentifier text="{BPNumber}"/>
-                                            <Text text="{Client}"/>
-                                            <Text text="{Transporter}"/>
-                                        </cells>
-                                    </ColumnListItem>
-                                </items>
-                            </Table>
+                <!-- Bottoni in riga con SpaceAround -->
+                <HBox class="bpButtons" justifyContent="SpaceAround">
+                    <Button id="idBpAutoButton" text="BP AUTO" press="onToggleFilter" class="orderButton" />
+                    <Button text="Liste complète" press="onTestF4Press" class="orderButton" />
+                </HBox>
 
+                <!-- Tabella dati -->
+                <VBox class="tabContent">
+                    <Table id="bpTable" mode="SingleSelectMaster" selectionChange="onBPSelected" class="scrollableTable" style="margin-right:10px;" items="{/BPData}">
+                        <columns>
+                            <!-- BP Number Column -->
+                            <Column>
+                                <header>
+                                    <Text text="N° BP" wrapping="false"/>
+                                </header>
+                            </Column>
+                            <Column>
+                                <header>
+                                    <Text text="Code client" wrapping="false"/>
+                                </header>
+                            </Column>
+                            <Column>
+                                <header>
+                                    <Text text="Client" wrapping="true"/>
+                                </header>
+                            </Column>
+                            <!-- Transporteur Columns -->
+                            <Column>
+                                <header>
+                                    <Text text="Code transporteur" wrapping="false"/>
+                                </header>
+                            </Column>
 
-                            <HBox class="bpButtons" justifyContent="SpaceBetween">
-                                <Button id="idCustomerDetail" text="INFO CLIENT" press="onDetailDuClient" visible="false" class="orderButton"/>
-                                <HBox width="100%"></HBox>
-                                <Button id="idSUIVANTButton" text="SUIVANT" press="onNextBP" enabled="false" class="orderButton"/>
-                            </HBox>
-                        </VBox>
-                    </IconTabFilter>
+                            <Column>
+                                <header>
+                                    <Text text="Transporteur" wrapping="true"/>
+                                </header>
+                            </Column>
 
+                        </columns>
 
-                    <IconTabFilter key="tab2" text="––"/>
+                        <items>
+                            <ColumnListItem>
+                                <cells>
+                                    <Text text="{BPNumber}" wrapping="false"/>
+                                    <Text text="{CodeClient}" wrapping="false"/>
+                                    <Text text="{Client}" wrapping="true"/>
+                                    <Text text="{Transporter}" wrapping="false"/>
+                                    <Text text="{DescriptionTransporteur}" wrapping="true"/>
 
-                    <IconTabFilter key="tab3" text="__"/>
-
-                </items>
-            </IconTabBar>
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                </VBox>
+                <HBox class="bpButtons" justifyContent="SpaceBetween">
+                    <Button id="idCustomerDetail" text="INFO CLIENT" press="onDetailDuClient" visible="false" class="orderButton"/>
+                    <HBox width="100%"></HBox>
+                    <Button id="idSUIVANTButton" text="SUIVANT" press="onNextBP" enabled="false" class="orderButton"/>
+                </HBox>
+            </VBox>
         </content>
     </Page>
 </mvc:View>

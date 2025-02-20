@@ -1,9 +1,12 @@
 <mvc:View controllerName="logistic-flow.controller.Batch"
     xmlns:mvc="sap.ui.core.mvc"
-    xmlns="sap.m">
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
     <Page title="Saisie des préparations" showNavButton="true" navButtonPress="onNavBack">
         <content>
             <Panel class="bpPanel">
+                <core:Fragment fragmentName="logistic-flow.fragment.IconTabBar" type="XML"/>
+
                 <VBox>
                     <Title text="Saisie" level="H2" class="sapUiSmallMarginTop"/>
                     <FlexBox direction="Column" class="borderedBox" alignItems="Stretch" justifyContent="Start">
@@ -49,7 +52,7 @@
                             <Label text="NB° BP:" width="100px" class="boldLabel"/>
                             <Input id="inputNbBP" width="30%"/>
                         </HBox>
-                   </FlexBox>
+                    </FlexBox>
                 </VBox>
             </Panel>
         </content>
