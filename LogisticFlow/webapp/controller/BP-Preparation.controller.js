@@ -2,11 +2,11 @@ sap.ui.define(
   [
     "sap/ui/core/mvc/Controller",
     "sap/ui/core/UIComponent",
-    "sap/ui/model/Filter",
-    "sap/ui/model/FilterOperator",
+    "sap/ui/model/json/JSONModel",
+    "sap/ui/model/odata/v2/ODataModel",
     "sap/ui/core/IconPool",
   ],
-  function (Controller, UIComponent, Filter, FilterOperator, IconPool) {
+  function (Controller, UIComponent, JSONModel, ODataModel, IconPool) {
     "use strict";
 
     return Controller.extend("logistic-flow.controller.BP-Preparation", {
@@ -14,102 +14,69 @@ sap.ui.define(
         // Inizializzo il router
         this.oRouter = UIComponent.getRouterFor(this);
 
-        // 🔹 Registrazione delle icone personalizzate
-        IconPool.addIcon("custom-top-bar", "custom", {
-          fontFamily: "SAP-icons",
-          content: "¯¯",
-        });
-        IconPool.addIcon("custom-middle-bar", "custom", {
-          fontFamily: "SAP-icons",
-          content: "––",
-        });
-        IconPool.addIcon("custom-bottom-bar", "custom", {
-          fontFamily: "SAP-icons",
-          content: "__",
+        // 🔹 Creazione del modello OData
+        this.oODataModel = new ODataModel("/sap/opu/odata/sap/ZPP_WSM_SRV/", {
+          defaultBindingMode: "TwoWay",
+          useBatch: false,
+          defaultCountMode: "Inline",
         });
 
-        // Event delegate per il click globale
-        this.getView().addEventDelegate({
-          onclick: function (oEvent) {
-            var oTable = this.getView().byId("bpTable");
-            var oTableDom = oTable && oTable.getDomRef();
-            var oClickedDom = oEvent.target;
+        // 🔹 Impostare il modello OData alla View
+        this.getView().setModel(this.oODataModel, "ODataModel");
 
-            // Recupera il riferimento del bottone BP AUTO
-            var oBpAutoButton = this.getView().byId("idBpAutoButton");
-            var oBpAutoDom = oBpAutoButton && oBpAutoButton.getDomRef();
+        // 🔹 Attendere il caricamento dei metadati prima di fare la richiesta
+        this.oODataModel.metadataLoaded().then(
+          function () {
+            console.log("✅ Metadati OData caricati correttamente!");
 
-            // Recupera il riferimento del bottone detail du client
-            var oCustomerDetailButton = this.getView().byId("idCustomerDetail");
-            var oCustomerDetailDom =
-              oCustomerDetailButton && oCustomerDetailButton.getDomRef();
+            // Eseguire la chiamata OData
+            this.oODataModel.read("/ZET_BP_HEADERSet", {
+              success: function (oData) {
+                console.log("✅ Dati ricevuti:", oData);
 
-            // Se il click avviene sul BP AUTO oppure su detail du client, non eseguire il reset
-            if (
-              (oBpAutoDom && oBpAutoDom.contains(oClickedDom)) ||
-              (oCustomerDetailDom && oCustomerDetailDom.contains(oClickedDom))
-            ) {
-              return;
-            }
+                // 🔹 CORREZIONE: Accedere ai dati correttamente
+                if (!oData || !Array.isArray(oData.results)) {
+                  console.error(
+                    "❌ Errore: i dati OData non sono nel formato previsto."
+                  );
+                  return;
+                }
 
-            // Se il click avviene fuori dalla tabella...
-            if (oTableDom && !oTableDom.contains(oClickedDom)) {
-              var aItems = oTable.getItems();
-              aItems.forEach(function (item) {
-                item.setSelected(false);
-              });
-              if (typeof oTable.clearSelection === "function") {
-                oTable.clearSelection();
-              } else if (typeof oTable.setSelectedItem === "function") {
-                oTable.setSelectedItem(null, true);
-              }
+                // Creiamo il modello JSON con i dati ricevuti
+                var oBPJsonModel = new JSONModel({ results: oData.results });
 
-              // Nasconde il bottone "detail du client"
-              if (oCustomerDetailButton) {
-                oCustomerDetailButton.setVisible(false);
-              }
+                // Impostiamo il modello alla View
+                this.getView().setModel(oBPJsonModel, "BPData");
+                console.log(
+                  "✅ Modello BPData impostato:",
+                  oBPJsonModel.getData()
+                );
 
-              // Se il BP AUTO è attivo, rimuove la classe "active" e cancella il filtro
-              if (oBpAutoButton && oBpAutoButton.hasStyleClass("active")) {
-                oBpAutoButton.removeStyleClass("active");
-                oTable.getBinding("items").filter([]);
-              }
-            }
-          }.bind(this),
-        });
+                // 🔹 Forziamo l'aggiornamento della tabella
+                var oTable = this.getView().byId("bpTable");
+                if (oTable) {
+                  oTable.setModel(oBPJsonModel, "BPData"); // Assicura che la tabella usi il modello corretto
+                  oTable.getBinding("items").refresh(true);
+                }
+              }.bind(this),
+              error: function (oError) {
+                console.error("❌ Errore nella chiamata OData:", oError);
+              },
+            });
+          }.bind(this)
+        );
       },
 
       onNavBack: function () {
         this.oRouter.navTo("MainView", {}, true);
       },
 
-      onToggleFilter: function (oEvent) {
-        var oButton = oEvent.getSource(); // Bottone BP AUTO
-        var bActive = oButton.hasStyleClass("active");
-        var oTable = this.getView().byId("bpTable");
+      onBPSelected: function () {
         var oCustomerDetailButton = this.getView().byId("idCustomerDetail");
-        var oSuivantButton = this.getView().byId("idSUIVANTButton");
+        if (oCustomerDetailButton) oCustomerDetailButton.setVisible(true);
 
-        if (bActive) {
-          oTable.getBinding("items").filter([]);
-          oButton.removeStyleClass("active");
-          oCustomerDetailButton.setVisible(false);
-          oSuivantButton.setEnabled(false);
-        } else {
-          oTable.getBinding("items").filter([]);
-          oButton.addStyleClass("active");
-          // Assicurati che il bottone "detail du client" resti nascosto
-          oCustomerDetailButton.setVisible(false);
-          // Impediamo che il bottone Suivant diventi abilitato
-          oSuivantButton.setEnabled(false);
-        }
-      },
-
-      onBPSelected: function (oEvent) {
-        var oCustomerDetailButton = this.getView().byId("idCustomerDetail");
-        oCustomerDetailButton.setVisible(true);
         var oSuivantButton = this.getView().byId("idSUIVANTButton");
-        oSuivantButton.setEnabled(true);
+        if (oSuivantButton) oSuivantButton.setEnabled(true);
       },
 
       onTestF4Press: function () {
@@ -120,7 +87,6 @@ sap.ui.define(
         this.oRouter.navTo("BP-RechercheProduit");
       },
 
-      // Metodo per navigare alla view DetailDuClient
       onDetailDuClient: function () {
         this.oRouter.navTo("DetailDuClient", {}, true);
       },

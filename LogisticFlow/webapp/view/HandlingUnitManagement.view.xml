@@ -1,0 +1,109 @@
+<mvc:View controllerName="logistic-flow.controller.HandlingUnitManagement"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <Page title="Saisie de collisage" showNavButton="true" navButtonPress="onNavBack" class="bpPreparationPage">
+        <content>
+            <ScrollContainer width="100%" horizontal="true" vertical="false">
+                <Table id="idHandlingUnitTable" width="900px" mode="SingleSelectLeft" growing="true" growingScrollToLoad="true" sticky="ColumnHeaders" items="{modelName>/Produits}">
+                    <headerToolbar>
+                        <Toolbar>
+                            <Title text="Saisie" level="H2"/>
+                            <ToolbarSpacer/>
+                            <Button text="Actualiser" press="onRefresh" icon="sap-icon://refresh"/>
+                        </Toolbar>
+                    </headerToolbar>
+
+                    <columns>
+                        <Column>
+                            <Text text="Produit"/>
+                        </Column>
+                        <Column>
+                            <Text text="Palette"/>
+                        </Column>
+                        <Column>
+                            <Text text="Box"/>
+                        </Column>
+                        <Column>
+                            <Text text="Nombre"/>
+                        </Column>
+                        <Column>
+                            <Text text="Condi"/>
+                        </Column>
+                        <Column>
+                            <Text text="Qtè"/>
+                        </Column>
+                        <Column>
+                            <Text text="Order/Return"/>
+                        </Column>
+                    </columns>
+
+                    <items>
+                        <ColumnListItem>
+                            <cells>
+                                <Text text="{modelName>Produit}" />
+                                <HBox>
+                                    <Text text="{modelName>Palette}" visible="{modelName>PaletteVisible}"/>
+                                    <Button icon="sap-icon://add" press="onOpenModal" visible="{modelName>PaletteButtonVisible}">
+                                        <customData>
+                                            <core:CustomData key="property" value="Palette"/>
+                                        </customData>
+                                    </Button>
+                                </HBox>
+
+                                <HBox>
+                                    <Text text="{modelName>Box}" visible="{modelName>BoxVisible}"/>
+                                    <Button icon="sap-icon://add" press="onOpenModal" visible="{modelName>BoxButtonVisible}">
+                                        <customData>
+                                            <core:CustomData key="property" value="Box"/>
+                                        </customData>
+                                    </Button>
+                                </HBox>
+
+                                <Text text="{modelName>Nombre}" />
+                                <Text text="{modelName>Condi}" />
+                                <Text text="{modelName>Qte}" />
+                                <Text text="{modelName>OrderReturn}" />
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </ScrollContainer>
+
+            <!-- Bottone centrale per eliminare la riga -->
+            <HBox justifyContent="Center" class="deleteButtonContainer sapUiSmallMarginTop">
+                <Button text="Supprimer ligne" press="onDeleteRow" icon="sap-icon://delete" type="Negative"/>
+            </HBox>
+
+        </content>
+    </Page>
+
+    <!-- Dialogo per la selezione di Palette o Box -->
+    <Dialog id="idPaletteBoxDialog" title="Seleziona Palette o Box" class="customDialog" afterClose="onCloseDialog">
+        <content>
+            <HBox>
+                <VBox>
+                    <Title text="Palette"/>
+                    <List id="idPaletteList" mode="SingleSelectMaster" items="{modelName>/Palettes}">
+                        <StandardListItem title="{modelName>Name}" />
+                    </List>
+                </VBox>
+
+                <VBox>
+                    <Title text="Box"/>
+                    <List id="idBoxList" mode="SingleSelectMaster" items="{modelName>/Boxes}">
+                        <StandardListItem title="{modelName>Name}" />
+                    </List>
+                </VBox>
+            </HBox>
+        </content>
+
+        <beginButton>
+            <Button text="OK" press="onDialogConfirm"/>
+        </beginButton>
+        <endButton>
+            <Button text="Annulla" press="onCloseDialog"/>
+        </endButton>
+    </Dialog>
+</mvc:View>

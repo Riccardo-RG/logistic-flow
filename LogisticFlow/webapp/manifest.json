@@ -20,7 +20,24 @@
       "": {
         "dataSource": "mainService",
         "settings": {
-          "preload": true
+          "preload": true,
+          "sync": true
+        }
+      }
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/sap/opu/odata/sap/ZPP_WSM_SRV/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "2.0",
+          "useBatch": false,
+          "defaultBindingMode": "TwoWay",
+          "defaultCountMode": "Inline",
+          "json": true,
+          "headers": {
+            "Accept": "application/json"
+          }
         }
       }
     },
@@ -73,6 +90,11 @@
           "pattern": "Batch",
           "name": "Batch",
           "target": "Batch"
+        },
+        {
+          "pattern": "Manage",
+          "name": "Manage",
+          "target": "Manage"
         }
       ],
       "targets": {
@@ -114,6 +136,12 @@
         },
         "Batch": {
           "viewName": "Batch",
+          "viewType": "XML",
+          "controlId": "navContainer",
+          "controlAggregation": "pages"
+        },
+        "Manage": {
+          "viewName": "HandlingUnitManagement",
           "viewType": "XML",
           "controlId": "navContainer",
           "controlAggregation": "pages"

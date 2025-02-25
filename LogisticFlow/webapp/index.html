@@ -32,6 +32,8 @@
     <!-- Redirect automatico a MainView se l'URL è vuoto -->
     <script>
       document.addEventListener("DOMContentLoaded", function () {
+        // Se non c’è un hash nella URL o se stiamo caricando index.html di base,
+        // reindirizziamo a MainView
         if (
           !window.location.hash ||
           window.location.pathname.endsWith("index.html")
@@ -47,6 +49,7 @@
   </head>
 
   <body class="sapUiBody">
+    <!-- Container che carica il componente "logistic-flow" -->
     <div
       data-sap-ui-component
       data-name="logistic-flow"

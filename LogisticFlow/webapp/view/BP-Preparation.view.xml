@@ -22,59 +22,80 @@
 
                 <!-- Bottoni in riga con SpaceAround -->
                 <HBox class="bpButtons" justifyContent="SpaceAround">
-                    <Button id="idBpAutoButton" text="BP AUTO" press="onToggleFilter" class="orderButton" />
-                    <Button text="Liste complète" press="onTestF4Press" class="orderButton" />
+                    <Button id="idBpAutoButton" text="BP AUTO" press="onToggleFilter" class="orderButton"/>
+                    <Button text="Liste complète" press="onTestF4Press" class="orderButton"/>
                 </HBox>
 
                 <!-- Tabella dati -->
                 <VBox class="tabContent">
-                    <Table id="bpTable" mode="SingleSelectMaster" selectionChange="onBPSelected" class="scrollableTable" style="margin-right:10px;" items="{/BPData}">
+                    <Table id="bpTable" mode="SingleSelectMaster" selectionChange="onBPSelected" class="scrollableTable" items="{BPData>/results}">
+
                         <columns>
-                            <!-- BP Number Column -->
                             <Column>
                                 <header>
-                                    <Text text="N° BP" wrapping="false"/>
+                                    <Text text="N° BP" />
                                 </header>
                             </Column>
                             <Column>
                                 <header>
-                                    <Text text="Code client" wrapping="false"/>
+                                    <Text text="Code client" />
                                 </header>
                             </Column>
                             <Column>
                                 <header>
-                                    <Text text="Client" wrapping="true"/>
+                                    <Text text="Client" />
                                 </header>
                             </Column>
-                            <!-- Transporteur Columns -->
                             <Column>
                                 <header>
-                                    <Text text="Code transporteur" wrapping="false"/>
+                                    <Text text="Code transporteur" />
                                 </header>
                             </Column>
-
                             <Column>
                                 <header>
-                                    <Text text="Transporteur" wrapping="true"/>
+                                    <Text text="Transporteur" />
                                 </header>
                             </Column>
-
+                            <!-- <Column>
+                                <header>
+                                    <Text text="ShipPoint" />
+                                </header>
+                            </Column>
+                            <Column>
+                                <header>
+                                    <Text text="Uscita merci" />
+                                </header>
+                            </Column>
+                            <Column>
+                                <header>
+                                    <Text text="Data cons." />
+                                </header>
+                            </Column>
+                            <Column>
+                                <header>
+                                    <Text text="Stato prelievo" />
+                                </header>
+                            </Column> -->
                         </columns>
 
                         <items>
                             <ColumnListItem>
                                 <cells>
-                                    <Text text="{BPNumber}" wrapping="false"/>
-                                    <Text text="{CodeClient}" wrapping="false"/>
-                                    <Text text="{Client}" wrapping="true"/>
-                                    <Text text="{Transporter}" wrapping="false"/>
-                                    <Text text="{DescriptionTransporteur}" wrapping="true"/>
-
+                                    <Text text="{BPData>IdBp}" />
+                                    <Text text="{BPData>CodCliente}" />
+                                    <Text text="{BPData>NomeCliente}" />
+                                    <Text text="{BPData>CodTrasp}" />
+                                    <Text text="{BPData>NomeTrasp}" />
+                                    <!-- <Text text="{BPData>ShipPoint}" />
+                                    <Text text="{BPData>PlannedGi}" />
+                                    <Text text="{BPData>Data}" />
+                                    <Text text="{BPData>PikingStatus}" /> -->
                                 </cells>
                             </ColumnListItem>
                         </items>
                     </Table>
                 </VBox>
+
                 <HBox class="bpButtons" justifyContent="SpaceBetween">
                     <Button id="idCustomerDetail" text="INFO CLIENT" press="onDetailDuClient" visible="false" class="orderButton"/>
                     <HBox width="100%"></HBox>

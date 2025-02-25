@@ -18,6 +18,7 @@
     "ui5-middleware-index": "^3.1.0",
     "ui5-middleware-livereload": "^3.1.0",
     "ui5-middleware-proxy": "^0.0.20",
-    "ui5-middleware-simpleproxy": "^3.3.1"
+    "ui5-middleware-servestatic": "^3.3.0",
+    "ui5-middleware-simpleproxy": "^3.4.0"
   }
 }
