@@ -220,6 +220,7 @@
   width: 100% !important; /* La tabella riempie tutto il contenitore */
   min-width: 800px; /* Sotto 800px di schermo -> scatta lo scroll orizz. */
   min-height: 700px;
+  max-height: 700px;
 }
 
 .scrollableTable .sapMListTblHeader {

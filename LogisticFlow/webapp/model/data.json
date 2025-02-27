@@ -227,11 +227,9 @@
       "date": "01 01 2023"
     }
   ],
-  "Palettes": [
-    { "Name": "Pallette_1" },
-    { "Name": "Pallette_2" },
-    { "Name": "Pallette_3" }
-  ],
+
+  "AllPalettes": [{ "Name": "3x3" }, { "Name": "5x5" }, { "Name": "Box" }],
+
   "Boxes": [
     { "Name": "Box_1" },
     { "Name": "Box_2" },
@@ -239,49 +237,43 @@
     { "Name": "Box_4" }
   ],
 
+  "Pallets": [
+    { "Name": "3x3 id: 1" },
+    { "Name": "5x5 id: 2" },
+    { "Name": "3x3 id: 3" },
+    { "Name": "5x5 id: 4" }
+  ],
   "Produits": [
     {
-      "Produit": "Produit F",
-      "Palette": null,
+      "Produit": "Produit A",
+      "PaletteId": "id: 1",
+      "Palette": "3x3",
       "Box": null,
       "Nombre": 8,
       "Condi": "Type_3",
       "Qte": 80
-    },
-    {
-      "Produit": "Produit A",
-      "Palette": "Palette_1",
-      "Box": "Box_1",
-      "Nombre": 10,
-      "Condi": "Type_1",
-      "Qte": 100
     },
     {
       "Produit": "Produit B",
-      "Palette": "Palette_2",
-      "Box": "Box_2",
-      "Nombre": 5,
-      "Condi": "Type_2",
-      "Qte": 50
-    },
-    {
-      "Produit": "Produit Z",
-      "Palette": "Palette_4",
-      "Box": null,
-      "Nombre": 8,
-      "Condi": "Type_3",
-      "Qte": 80
+      "PaletteId": null,
+      "Palette": null,
+      "Box": "Box",
+      "Nombre": 10,
+      "Condi": "Type_1",
+      "Qte": 100
     },
     {
       "Produit": "Produit C",
-      "Palette": "Palette_3",
-      "Box": "Box_3",
-      "Nombre": 8,
-      "Condi": "Type_3",
-      "Qte": 80
+      "PaletteId": "id: 2",
+      "Palette": "3x3",
+      "Box": "Box",
+      "Nombre": 5,
+      "Condi": "Type_2",
+      "Qte": 50
     },
     {
-      "Produit": "Produit F",
+      "Produit": "Produit D",
+      "PaletteId": null,
       "Palette": null,
       "Box": null,
       "Nombre": 8,
@@ -289,28 +281,22 @@
       "Qte": 80
     },
     {
-      "Produit": "Produit A",
-      "Palette": "Palette_1",
-      "Box": "Box_1",
-      "Nombre": 10,
-      "Condi": "Type_1",
-      "Qte": 100
-    },
-    {
-      "Produit": "Produit B",
-      "Palette": "Palette_2",
-      "Box": "Box_2",
-      "Nombre": 5,
-      "Condi": "Type_2",
-      "Qte": 50
-    },
-    {
-      "Produit": "Produit Z",
-      "Palette": "Palette_4",
-      "Box": null,
+      "Produit": "Produit E",
+      "PaletteId": "id: 1",
+      "Palette": "5x5",
+      "Box": "Box",
       "Nombre": 8,
       "Condi": "Type_3",
       "Qte": 80
+    },
+    {
+      "Produit": "Produit F",
+      "PaletteId": "2",
+      "Palette": "id: 5x5",
+      "Box": "Box",
+      "Nombre": 6,
+      "Condi": "Type_1",
+      "Qte": 60
     }
   ]
 }

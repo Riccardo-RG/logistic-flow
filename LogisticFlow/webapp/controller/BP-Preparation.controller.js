@@ -71,6 +71,11 @@ sap.ui.define(
         this.oRouter.navTo("MainView", {}, true);
       },
 
+      onToggleFilter: function (oEvent) {
+        var oButton = oEvent.getSource();
+        oButton.toggleStyleClass("active");
+      },
+
       onBPSelected: function () {
         var oCustomerDetailButton = this.getView().byId("idCustomerDetail");
         if (oCustomerDetailButton) oCustomerDetailButton.setVisible(true);

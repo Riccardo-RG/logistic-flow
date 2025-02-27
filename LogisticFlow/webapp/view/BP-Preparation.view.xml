@@ -28,8 +28,7 @@
 
                 <!-- Tabella dati -->
                 <VBox class="tabContent">
-                    <Table id="bpTable" mode="SingleSelectMaster" selectionChange="onBPSelected" class="scrollableTable" items="{BPData>/results}">
-
+                    <Table id="bpTable" class="scrollableTable" mode="SingleSelectMaster" items="{BPData>/results}" selectionChange=".onBPSelected">
                         <columns>
                             <Column>
                                 <header>
@@ -80,7 +79,7 @@
 
                         <items>
                             <ColumnListItem>
-                                <cells>
+                                <cells >
                                     <Text text="{BPData>IdBp}" />
                                     <Text text="{BPData>CodCliente}" />
                                     <Text text="{BPData>NomeCliente}" />

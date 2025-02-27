@@ -157,7 +157,22 @@ sap.ui.define(
       onShowMessage: function () {
         MessageToast.show("Azione eseguita correttamente in BP-DoJour!");
       },
+      /*--------------------------------------------
+      |  Open Date Filter Popover
+      ---------------------------------------------*/
+      onOpenDateFilter: function (oEvent) {
+        // Get the popover by ID
+        var oPopover = this.getView().byId("dateFilterPopover");
 
+        // Check if the Popover exists
+        if (!oPopover) {
+          MessageToast.show("Popover non trovato.");
+          return;
+        }
+
+        // Open the Popover relative to the button that triggered the event
+        oPopover.openBy(oEvent.getSource());
+      },
       /*--------------------------------------------
       |  Ricerca / Filtraggio
       ---------------------------------------------*/

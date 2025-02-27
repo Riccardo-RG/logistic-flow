@@ -16,7 +16,7 @@
                     </RadioButtonGroup>
                     <SearchField id="bpSearchField" width="100%" placeholder="Rechercher..." liveChange="onSearch" />
 
-                    <Table id="bpTable" items="{/BPRechercheData}" class="borderedTable scrollableTable sapUiSmallMarginTop">
+                    <Table id="bpTable" items="{BPData>/BPRechercheData}" class="borderedTable scrollableTable sapUiSmallMarginTop">
                         <columns>
                             <Column width="3em" hAlign="Center">
                                 <Text text="Pr" />
@@ -27,26 +27,18 @@
                             <Column width="15em">
                                 <Text text="Libellé" />
                             </Column>
-                            <Column width="5em" hAlign="Center">
-                                <Text text="Test" />
-                            </Column>
-                            <Column width="5em" hAlign="Center">
-                                <Text text="Test1" />
-                            </Column>
-                            <Column width="5em" hAlign="Center">
-                                <Text text="Test2" />
-                            </Column>
                         </columns>
                         <items>
                             <ColumnListItem type="Active" press="onRowSelect" selectable="true">
                                 <cells>
-                                    <Label text="✔" visible="{pr}" class="sapUiAlignCenter" />
-                                    <Text text="{BP}" class="sapUiAlignCenter" />
-                                    <Text text="{NomClient}" />
+                                    <Label text="✔" visible="{BPData>pr}" class="sapUiAlignCenter" />
+                                    <Text text="{BPData>BP}" class="sapUiAlignCenter" />
+                                    <Text text="{BPData>NomClient}" />
                                 </cells>
                             </ColumnListItem>
                         </items>
                     </Table>
+
 
                     <HBox class="buttonContainerWithGap" width="100%" justifyContent="Center" alignItems="Center">
                         <Button text="Annuler" type="Default" press="onCancel" class="bigButton annulerButton"/>
@@ -58,7 +50,7 @@
         <footer>
             <Bar>
                 <contentMiddle>
-                    <Button text="Test Scan" press="onTestScan" type="Transparent" style="opacity: 0.5;" />
+                    <Button text="Test Scan" press="onTestScan" type="Transparent" />
                 </contentMiddle>
             </Bar>
         </footer>

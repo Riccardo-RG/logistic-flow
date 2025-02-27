@@ -26,14 +26,22 @@ sap.ui.define(
           // Carica i dati in modo asincrono
           oModel.loadData("model/data.json");
 
-          // Attendi il completamento della richiesta prima di assegnare i dati
           oModel.attachRequestCompleted(
             function (oEvent) {
               if (!oEvent.getParameter("errorObject")) {
                 var oData = oModel.getData();
 
-                // ✅ APPLICA IL FORMATTER AI DATI PRIMA DELLA VISUALIZZAZIONE
+                // ✅ Aggiunta di DisplayPalette e DisplayBox per la concatenazione
                 oData.Produits.forEach(function (oItem) {
+                  oItem.DisplayPalette =
+                    (oItem.PaletteId ? oItem.PaletteId : "") +
+                    " - " +
+                    (oItem.Palette ? oItem.Palette : "");
+                  oItem.DisplayBox =
+                    (oItem.BoxId ? oItem.BoxId : "") +
+                    " - " +
+                    (oItem.Box ? oItem.Box : "");
+
                   oItem.PaletteVisible = ProduitFormatter.isValueVisible(
                     oItem.Palette
                   );
@@ -53,18 +61,47 @@ sap.ui.define(
 
                 // Aggiunta dei dati delle Palette e dei Box al modello
                 oData.Palettes = [
-                  { Name: "Pallette_1" },
-                  { Name: "Pallette_2" },
-                  { Name: "Pallette_3" },
-                ];
-                oData.Boxes = [
-                  { Name: "Box_1" },
-                  { Name: "Box_2" },
-                  { Name: "Box_3" },
-                  { Name: "Box_4" },
+                  {
+                    Id: "P001",
+                    Name: "Pallette_1",
+                    Type: "120x80",
+                    DisplayPalette: "P001 - Pallette_1",
+                  },
+                  {
+                    Id: "P002",
+                    Name: "Pallette_1",
+                    Type: "120x80",
+                    DisplayPalette: "P002 - Pallette_1",
+                  },
+                  {
+                    Id: "P003",
+                    Name: "Pallette_2",
+                    Type: "100x120",
+                    DisplayPalette: "P003 - Pallette_2",
+                  },
+                  {
+                    Id: "P004",
+                    Name: "Pallette_3",
+                    Type: "110x90",
+                    DisplayPalette: "P004 - Pallette_3",
+                  },
                 ];
 
-                // Assegna i dati trasformati al modello
+                oData.Boxes = [
+                  {
+                    Id: "B001",
+                    Name: "Box id: 1",
+                    Type: "Small",
+                    DisplayBox: "B001 - Box_1",
+                  },
+                  {
+                    Id: "B001",
+                    Name: "Box id: 2",
+                    Type: "Small",
+                    DisplayBox: "B001 - Box_1",
+                  },
+                ];
+
                 oModel.setData(oData);
                 this.getView().setModel(oModel, "modelName");
 
@@ -97,12 +134,10 @@ sap.ui.define(
         onOpenModal: function (oEvent) {
           var oView = this.getView();
 
-          // Controlla se il Dialog esiste già
           if (!this.oDialog) {
             this.oDialog = oView.byId("idPaletteBoxDialog");
           }
 
-          // Se il Dialog non esiste, lo crea dinamicamente
           if (!this.oDialog) {
             this.oDialog = sap.ui.xmlfragment(
               oView.getId(),
@@ -112,7 +147,6 @@ sap.ui.define(
             oView.addDependent(this.oDialog);
           }
 
-          // Apri il Dialog
           this.oDialog.open();
         },
 
@@ -123,6 +157,107 @@ sap.ui.define(
 
         onCloseDialog: function () {
           this.oDialog.close();
+        },
+
+        onOpenManagePalletteDialog: function () {
+          if (!this.oManagePalletteDialog) {
+            this.oManagePalletteDialog = this.getView().byId(
+              "idManagePalletteDialog"
+            );
+          }
+          this.oManagePalletteDialog.open();
+        },
+
+        onCloseManagePalletteDialog: function () {
+          this.oManagePalletteDialog.close();
+        },
+
+        onConfirmManagePallette: function () {
+          var oList = this.getView().byId("idAllPalletsList");
+          var aSelectedItems = oList.getSelectedItems();
+          var aSelectedPallets = [];
+
+          // Recupera i pallet selezionati
+          aSelectedItems.forEach(function (oItem) {
+            var oContext = oItem.getBindingContext("modelName");
+            aSelectedPallets.push(oContext.getObject());
+          });
+
+          // Salva nel modello (aggiungi qui la logica per usarli nella tabella)
+          var oModel = this.getView().getModel("modelName");
+          oModel.setProperty("/SelectedPallets", aSelectedPallets);
+
+          // Chiudi la modale
+          this.onCloseManagePalletteDialog();
+        },
+        onIncreasePallette: function (oEvent) {
+          var oListItem = oEvent.getSource().getParent().getParent(); // Ottieni l'elemento della riga
+          var oContext = oListItem.getBindingContext("modelName"); // Ottieni il contesto dati
+          var oModel = this.getView().getModel("modelName");
+
+          var oData = oContext.getObject();
+          if (!oData.SelectedQuantity) {
+            oData.SelectedQuantity = 0; // Imposta a zero se non è definito
+          }
+
+          oData.SelectedQuantity++; // Aumenta di 1
+          oModel.refresh(); // Aggiorna la vista
+        },
+
+        onDecreasePallette: function (oEvent) {
+          var oListItem = oEvent.getSource().getParent().getParent();
+          var oContext = oListItem.getBindingContext("modelName");
+          var oModel = this.getView().getModel("modelName");
+
+          var oData = oContext.getObject();
+          if (!oData.SelectedQuantity) {
+            oData.SelectedQuantity = 0;
+          }
+
+          if (oData.SelectedQuantity > 0) {
+            oData.SelectedQuantity--; // Diminuisci di 1 solo se maggiore di 0
+          }
+
+          oModel.refresh();
+        },
+
+        onOpenSelectionDialog: function (oEvent) {
+          this._selectedProperty = oEvent
+            .getSource()
+            .getCustomData()[0]
+            .getValue(); // "Box" o "Palette"
+          if (!this._oSelectDialog) {
+            this._oSelectDialog = this.byId("idSelectBoxPalletDialog");
+          }
+          this._oSelectDialog.open();
+        },
+
+        onSelectPallet: function (oEvent) {
+          let selectedItem = oEvent.getParameter("listItem").getTitle();
+          this._selectedPallet = selectedItem;
+        },
+
+        onSelectBox: function (oEvent) {
+          let selectedItem = oEvent.getParameter("listItem").getTitle();
+          this._selectedBox = selectedItem;
+        },
+
+        onConfirmSelection: function () {
+          let oModel = this.getView().getModel("modelName");
+          let oData = oModel.getData();
+
+          if (this._selectedProperty === "Palette" && this._selectedPallet) {
+            oData.SelectedPalette = this._selectedPallet;
+          } else if (this._selectedProperty === "Box" && this._selectedBox) {
+            oData.SelectedBox = this._selectedBox;
+          }
+
+          oModel.refresh();
+          this._oSelectDialog.close();
+        },
+
+        onCloseSelectionDialog: function () {
+          this._oSelectDialog.close();
         },
       }
     );
