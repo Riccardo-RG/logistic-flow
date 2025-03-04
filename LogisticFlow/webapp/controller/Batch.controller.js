@@ -25,12 +25,16 @@ sap.ui.define(
         });
 
         if (bFieldFilled) {
-          MessageBox.confirm(
-            "Ci sono modifiche non salvate. Confermi di voler uscire?",
+          // ✅ Boîte de dialogue de confirmation en français avec boutons personnalisés
+          MessageBox.show(
+            "Des données ont été saisies dans les champs. Êtes-vous sûr de vouloir quitter cette page ?",
             {
-              title: "Conferma",
-              onClose: function (oAction) {
-                if (oAction === MessageBox.Action.OK) {
+              icon: MessageBox.Icon.WARNING,
+              title: "Attention",
+              actions: ["Oui", "Non"], // 🔹 Boutons personnalisés en français
+              emphasizedAction: "Oui",
+              onClose: function (sAction) {
+                if (sAction === "Oui") {
                   this.oRouter.navTo("PrepareProduit", {}, true);
                 }
               }.bind(this),

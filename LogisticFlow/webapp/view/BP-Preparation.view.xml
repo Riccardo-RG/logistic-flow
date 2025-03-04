@@ -23,7 +23,7 @@
                 <!-- Bottoni in riga con SpaceAround -->
                 <HBox class="bpButtons" justifyContent="SpaceAround">
                     <Button id="idBpAutoButton" text="BP AUTO" press="onToggleFilter" class="orderButton"/>
-                    <Button text="Liste complète" press="onTestF4Press" class="orderButton"/>
+                    <Button text="LISTE COMPLÈTE" press="onTestF4Press" class="orderButton"/>
                 </HBox>
 
                 <!-- Tabella dati -->
@@ -32,7 +32,7 @@
                         <columns>
                             <Column>
                                 <header>
-                                    <Text text="N° BP" />
+                                    <Text text="N° BP"/>
                                 </header>
                             </Column>
                             <Column>

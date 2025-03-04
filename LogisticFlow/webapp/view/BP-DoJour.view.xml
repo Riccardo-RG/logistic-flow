@@ -6,7 +6,7 @@
 
         <content>
             <Panel class="bpPanel">
-                <VBox >
+                <VBox>
 
                     <RadioButtonGroup select="onSelectionChange" columns="2">
                         <buttons>
@@ -25,29 +25,9 @@
                         <Button text="ASC" icon="sap-icon://sort-ascending" press="onSortAsc" />
                         <Button text="DESC" icon="sap-icon://sort-descending" press="onSortDesc" />
                         <Button icon="sap-icon://undo" press="onSortReset" />
-
-                        <!-- Nuovo Bottone per Filtrare per Data -->
-
-
-                        <!-- Popover per selezione delle date -->
-                        <Popover id="dateFilterPopover" placement="Bottom" title="Sélectionner la Période">
-                            <VBox class="dateFilterContainer" alignItems="Center" justifyContent="Center" width="250px">
-
-
-
-                                <VBox alignItems="Center" justifyContent="Center" width="100%">
-                                    <DatePicker id="fromDatePicker" width="90%" displayFormat="dd MM yyyy" valueFormat="yyyy-MM-dd" placeholder="dd MM yyyy" />
-
-                                    <DatePicker id="toDatePicker" width="90%" displayFormat="dd MM yyyy" valueFormat="yyyy-MM-dd" placeholder="dd MM yyyy" />
-                                </VBox>
-
-                                <Button text="Appliquer" type="Emphasized" press="onApplyDateFilter" class="applyButton"/>
-                            </VBox>
-                        </Popover>
                     </Toolbar>
 
                     <Table id="bpTable" items="{/BPRechercheData}" class="borderedTable scrollableTable">
-
                         <columns>
                             <Column width="5em">
                                 <Text text="Date" />
@@ -61,7 +41,6 @@
                             <Column width="5em">
                                 <Text text="Code Client" />
                             </Column>
-
                         </columns>
 
                         <items>
@@ -71,7 +50,6 @@
                                     <Text text="{BP}" />
                                     <Text text="{NomClient}" />
                                     <Text text="{CodeClient}" />
-
                                 </cells>
                             </ColumnListItem>
                         </items>
@@ -86,4 +64,16 @@
             </Panel>
         </content>
     </Page>
+
+    <!-- Popover per selezione delle date -->
+    <Popover id="dateFilterPopover" placement="Bottom" title="Sélectionner la Période" beforeOpen="onBeforeOpenDateFilter">
+        <VBox class="dateFilterContainer" alignItems="Center" justifyContent="Center" width="250px">
+            <VBox alignItems="Center" justifyContent="Center" width="100%">
+                <DatePicker id="fromDatePicker" width="90%" displayFormat="dd MM yyyy" valueFormat="yyyy-MM-dd" placeholder="dd MM yyyy" />
+                <DatePicker id="toDatePicker" width="90%" displayFormat="dd MM yyyy" valueFormat="yyyy-MM-dd" placeholder="dd MM yyyy" />
+            </VBox>
+            <Button text="Appliquer" type="Emphasized" press="onApplyDateFilter" class="applyButton"/>
+        </VBox>
+    </Popover>
+
 </mvc:View>

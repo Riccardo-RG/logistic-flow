@@ -7,17 +7,16 @@
     <!-- SAPUI5 Bootstrap -->
     <script
       id="sap-ui-bootstrap"
-      src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"
-      data-sap-ui-libs="sap.m,sap.ui.layout"
+      src="https://sapui5.hana.ondemand.com/1.96/resources/sap-ui-core.js"
+      data-sap-ui-libs="sap.m,sap.ui.core,sap.ui.layout"
       data-sap-ui-theme="sap_horizon"
       data-sap-ui-async="true"
-      data-sap-ui-resourceroots='{
-        "logistic-flow": "./"
-      }'
+      data-sap-ui-preload="async"
+      data-sap-ui-resourceroots='{"logistic-flow": "./"}'
       data-sap-ui-oninit="module:sap/ui/core/ComponentSupport"
     ></script>
 
-    <!-- Live Reload (ignora se non disponibile) -->
+    <!-- (Facoltativo) Live Reload -->
     <script>
       (function () {
         var script = document.createElement("script");
@@ -32,8 +31,6 @@
     <!-- Redirect automatico a MainView se l'URL è vuoto -->
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        // Se non c’è un hash nella URL o se stiamo caricando index.html di base,
-        // reindirizziamo a MainView
         if (
           !window.location.hash ||
           window.location.pathname.endsWith("index.html")
@@ -49,11 +46,13 @@
   </head>
 
   <body class="sapUiBody">
-    <!-- Container che carica il componente "logistic-flow" -->
+    <!-- Container per caricare il componente SAPUI5 -->
     <div
       data-sap-ui-component
       data-name="logistic-flow"
       data-id="container"
+      data-sap-ui-async="true"
+      data-settings='{"manifestFirst": true}'
     ></div>
   </body>
 </html>

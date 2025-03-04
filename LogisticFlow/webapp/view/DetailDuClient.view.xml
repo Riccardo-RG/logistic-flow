@@ -4,29 +4,28 @@
   xmlns:layout="sap.ui.layout.form" displayBlock="true">
 
   <Page title="DETAIL DU CLIENT" class="bpPreparationPage" showNavButton="true" navButtonPress=".onNavBack">
-    <content >
-      <Panel class="bpPanel" >
-        <layout:SimpleForm id="simpleFormDetailDuClient" editable="false" layout="ResponsiveGridLayout" class="sapUiLargeMarginTop">
-          
+    <content>
+      <Panel >
+        <layout:SimpleForm id="simpleFormDetailDuClient" editable="false" layout="ResponsiveGridLayout" class="sapUiSmallMarginTop">
+
           <VBox class="fieldPair">
             <Label text="LINER" class="boldLabel" />
-            <Text id="textLiner" text="OUI" class="sapUiSmallMarginBottom"/>
+            <Text id="textLiner" text="OUI" class="sapUiSmallMarginBottom sapUiSmallMarginTop"/>
           </VBox>
 
           <VBox class="fieldPair">
             <Label text="SANS DLU" class="boldLabel" />
-            <Text id="textSansDlu" text=" - " class="sapUiSmallMarginBottom"/>
+            <Text id="textSansDlu" text=" - " class="sapUiSmallMarginBottom sapUiSmallMarginTop"/>
           </VBox>
 
           <VBox class="fieldPair">
             <Label text="LISTE DE COLISAGE" class="boldLabel" />
-            <Text id="textListeDeColisage" text="OUI" />
+            <Text id="textListeDeColisage" text="OUI" class="sapUiSmallMarginBottom sapUiSmallMarginTop"/>
           </VBox>
 
-          <VBox class="fieldPair">
-            <Label text="COMMENTARIES" class="boldLabel"/>
-            <TextArea id="textareaCommentaires" rows="10" width="100%" class="boldLabel" editable="false"
-              value="PAL120*120 NON EUROPE COMPLETE METRE DOC RECAP DES PRUDIOTS SUR CHAQUE PALETTE RESPECTER ... 
+          <VBox class="fieldPair sapUiMediumMarginTop">
+            <Label text="COMMENTARIES" class="boldLabel sapUiSmallMarginBottom"/>
+            <TextArea id="textareaCommentaires" rows="10" width="100%" class="boldLabel" editable="false" value="PAL120*120 NON EUROPE COMPLETE METRE DOC RECAP DES PRUDIOTS SUR CHAQUE PALETTE RESPECTER ... 
 PAL120*120 NON EUROPE COMPLETE METRE DOC RECAP DES PRUDIOTS SUR CHAQUE PALETTE RESPECTER ... 
 PAL120*120 NON EUROPE COMPLETE METRE DOC RECAP DES PRUDIOTS SUR CHAQUE PALETTE RESPECTER ... 
 PAL120*120 NON EUROPE COMPLETE METRE DOC RECAP DES PRUDIOTS SUR CHAQUE PALETTE RESPECTER ... 

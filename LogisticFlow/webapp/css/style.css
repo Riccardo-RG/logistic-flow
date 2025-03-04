@@ -228,12 +228,12 @@
   background: white;
 }
 
-.scrollableTable td:nth-child(4), /* Client */
-.scrollableTable td:nth-child(5) /* Description transporteur */ {
-  max-width: 300px; /* Imposta una larghezza massima per evitare celle troppo larghe */
-  white-space: normal; /* Permette il wrapping del testo */
-  word-wrap: break-word; /* Rompe il testo se necessario */
-  overflow: visible; /* Evita il taglio del testo */
+.scrollableTable td:nth-child(4),
+.scrollableTable td:nth-child(5) {
+  max-width: 300px;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow: visible;
 }
 
 .orderButton .sapMBtnInner {
@@ -241,6 +241,7 @@
   color: black;
   border-radius: 0;
   transition: all 0.3s ease-in-out;
+  background-color: white;
 }
 
 .orderButton.active .sapMBtnInner {
@@ -249,6 +250,13 @@
   border-color: #2c3e50 !important;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
   transform: scale(1.1);
+}
+
+.sapUiRespGrid {
+  min-height: 700px;
+  border-radius: 8px;
+  padding: 0 15px 5px 5px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 /* BP-RECHERCHE VIEW STYLESHEET */

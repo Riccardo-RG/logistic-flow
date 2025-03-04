@@ -43,6 +43,11 @@ sap.ui.define(
         this.oRouter.navTo("PrepareProduit");
       },
 
+      onNavBack: function () {
+        // Navigazione a "BP-RechercheProduit"
+        this.oRouter.navTo("BP-Preparation");
+      },
+
       _applyRowStyles: function () {
         var oTable = this.byId("bpTable");
         if (!oTable) {

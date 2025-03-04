@@ -5,8 +5,16 @@ sap.ui.define(
     "sap/ui/model/odata/v2/ODataModel",
     "sap/ui/core/Fragment",
     "logistic-flow/utils/ProduitFormatter",
+    "sap/ui/core/theming/Parameters",
   ],
-  function (UIComponent, JSONModel, ODataModel, Fragment, ProduitFormatter) {
+  function (
+    UIComponent,
+    JSONModel,
+    ODataModel,
+    Fragment,
+    ProduitFormatter,
+    Parameters
+  ) {
     "use strict";
 
     return UIComponent.extend("logistic-flow.Component", {
@@ -15,31 +23,50 @@ sap.ui.define(
       },
 
       init: function () {
-        // 1. Chiamare la funzione init della classe padre
         UIComponent.prototype.init.apply(this, arguments);
 
-        // 2. Inizializzare il router
-        this.getRouter().initialize();
+        var oRouter = this.getRouter();
+        if (oRouter) {
+          oRouter.initialize();
+          this.getRootControl()
+            .loaded()
+            .then(() => {
+              console.log("✅ RootView caricata:", this.getRootControl());
 
-        // 3. Creare (eventualmente) un modello JSON di dati di esempio
-        var oJsonModel = new JSONModel("model/data.json");
-        this.setModel(oJsonModel, "jsonModel");
+              var oNavContainer = this.getRootControl().byId("navContainer");
+              if (oNavContainer) {
+                console.log("✅ NavContainer trovato:", oNavContainer);
+              } else {
+                console.error("❌ NavContainer NON trovato!");
+              }
 
-        // 4. Creazione del modello OData
+              if (!window.location.hash || window.location.hash === "#") {
+                oRouter.navTo("MainView", {}, true);
+              }
+            });
+        } else {
+          console.error("❌ Router non inizializzato correttamente.");
+        }
 
-        // 8. Includere il CSS personalizzato
-        sap.ui.getCore().attachInit(function () {
-          sap.ui.require(
-            ["sap/ui/dom/includeStylesheet"],
-            function (includeStylesheet) {
-              includeStylesheet("css/style.css");
-            }
-          );
-        });
+        // Caricare il CSS personalizzato in modo più affidabile
+        this._loadCustomCSS();
 
         console.log("ProduitFormatter caricato:", ProduitFormatter);
 
-        // 9. Gestione NavContainer e iniezione del frammento GlobalTabBar (se necessario)
+        // Gestire il GlobalTabBar
+        this._handleGlobalTabBar();
+      },
+
+      _loadCustomCSS: function () {
+        var sCustomCssPath = jQuery.sap.getModulePath(
+          "logistic-flow",
+          "/css/style.css"
+        );
+        jQuery.sap.includeStyleSheet(sCustomCssPath);
+        console.log("✅ CSS personalizzato caricato:", sCustomCssPath);
+      },
+
+      _handleGlobalTabBar: function () {
         var oRootControl = this.getRootControl();
         var oNavContainer = oRootControl && oRootControl.byId("navContainer");
         if (oNavContainer) {
@@ -58,6 +85,8 @@ sap.ui.define(
               });
             }
           }, this);
+        } else {
+          console.warn("NavContainer non trovato, GlobalTabBar non caricato.");
         }
       },
     });
