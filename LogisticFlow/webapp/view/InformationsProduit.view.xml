@@ -1,0 +1,61 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core" controllerName="logistic-flow.controller.InformationsProduit">
+
+    <Page title="Informations sur le Produit" showNavButton="true" navButtonPress="onNavBack">
+
+        <content>
+            <Panel class="bpPanel sapUiSmallPaddingTop">
+
+                <VBox>
+
+                    <FlexBox direction="Row" alignItems="Center" justifyContent="Space-between" class="sapUiSmallMarginBottom">
+                        <HBox alignItems="Center" justifyContent="Start" class="sapUiSmallMarginEnd">
+                            <Title text="Scanner ou insérer le code produit" level="H2" />
+                        </HBox>
+                        <Button icon="sap-icon://undo" press="onSortReset" />
+                    </FlexBox>
+
+                    <FlexBox direction="Column" class="borderedBox" alignItems="Stretch" justifyContent="Start">
+                        <FlexBox direction="Row" alignItems="Center" justifyContent="Start" class="sapUiSmallMarginBottom">
+                            <Text text="Produit:" class="sapUiSmallMarginEnd boldLabel"/>
+                            <Input id="productInput" width="90%" liveChange="onInputChange" type="Number"/>
+                        </FlexBox>
+
+                        <FlexBox justifyContent="Center">
+                            <Button id="nextButton" text="Suivant" press="onSuivantPress" type="Emphasized" enabled="false"/>
+
+
+                        </FlexBox>
+                    </FlexBox>
+
+                    <FlexBox direction="Column" class="borderedBox sapUiSmallMarginTop" alignItems="Stretch" justifyContent="Start">
+                        <Title text="Code" level="H2" />
+                        <Text text="1342"/>
+                    </FlexBox>
+
+                    <FlexBox direction="Column" class="borderedBox sapUiSmallMarginTop" alignItems="Stretch" justifyContent="Start">
+                        <Title text="Description" level="H2" />
+                        <Text text="LPAL120*120 NON EUROPE COMPLETE METRE DOC RECAP DES PRUDIOTS SUR CHAQUE PALETTE RESPECTER ... 
+PAL120*120 NON EUROPE COMPLETE METRE DOC RECAP DES PRUDIOTS SUR CHAQUE PALETTE RESPECTER ..."/>
+                    </FlexBox>
+
+                    <FlexBox direction="Column" class="borderedBox sapUiSmallMarginTop" alignItems="Stretch" justifyContent="Start">
+                        <Title text="Conditionnement" level="H2" />
+                        <Text text="SXP"/>
+                    </FlexBox>
+
+                    <FlexBox direction="Column" class="borderedBox sapUiSmallMarginTop" alignItems="Stretch" justifyContent="Start">
+                        <Title text="Pallette" level="H2" />
+                        <Text text="Non attribué"/>
+                    </FlexBox>
+
+                    <FlexBox direction="Column" class="borderedBox sapUiSmallMarginTop" alignItems="Stretch" justifyContent="Start">
+                        <Title text="Lot" level="H2" />
+                        <Text text="433244543"/>
+                    </FlexBox>
+                </VBox>
+            </Panel>
+        </content>
+    </Page>
+</mvc:View>

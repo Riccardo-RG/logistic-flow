@@ -282,7 +282,7 @@
 
 button.sapMBtn.bigButton {
   font-size: 18px !important;
-  width: 150px !important;
+  width: 210px !important;
   height: 50px !important;
   line-height: 50px !important;
   padding: 0 20px !important;
@@ -306,8 +306,8 @@ button.sapMBtn.bigButton {
 .sapMBtn.bigButton,
 .sapMBtn.bigButton .sapMBtnInner {
   font-size: 18px !important;
-  width: 150px !important;
-  height: 50px !important;
+  width: 220px !important;
+  height: 60px !important;
   line-height: 50px !important;
   padding: 0 20px !important;
   text-align: center !important;

@@ -5,13 +5,20 @@ sap.ui.define(
     "sap/ui/model/json/JSONModel",
     "sap/ui/model/odata/v2/ODataModel",
     "sap/ui/core/IconPool",
+    "sap/m/MessageToast",
   ],
-  function (Controller, UIComponent, JSONModel, ODataModel, IconPool) {
+  function (
+    Controller,
+    UIComponent,
+    JSONModel,
+    ODataModel,
+    IconPool,
+    MessageToast
+  ) {
     "use strict";
 
     return Controller.extend("logistic-flow.controller.BP-Preparation", {
       onInit: function () {
-        // Inizializzo il router
         this.oRouter = UIComponent.getRouterFor(this);
 
         // 🔹 Creazione del modello OData
@@ -21,7 +28,6 @@ sap.ui.define(
           defaultCountMode: "Inline",
         });
 
-        // 🔹 Impostare il modello OData alla View
         this.getView().setModel(this.oODataModel, "ODataModel");
 
         // 🔹 Attendere il caricamento dei metadati prima di fare la richiesta
@@ -34,7 +40,6 @@ sap.ui.define(
               success: function (oData) {
                 console.log("✅ Dati ricevuti:", oData);
 
-                // 🔹 CORREZIONE: Accedere ai dati correttamente
                 if (!oData || !Array.isArray(oData.results)) {
                   console.error(
                     "❌ Errore: i dati OData non sono nel formato previsto."
@@ -51,13 +56,6 @@ sap.ui.define(
                   "✅ Modello BPData impostato:",
                   oBPJsonModel.getData()
                 );
-
-                // 🔹 Forziamo l'aggiornamento della tabella
-                var oTable = this.getView().byId("bpTable");
-                if (oTable) {
-                  oTable.setModel(oBPJsonModel, "BPData"); // Assicura che la tabella usi il modello corretto
-                  oTable.getBinding("items").refresh(true);
-                }
               }.bind(this),
               error: function (oError) {
                 console.error("❌ Errore nella chiamata OData:", oError);
@@ -71,29 +69,56 @@ sap.ui.define(
         this.oRouter.navTo("MainView", {}, true);
       },
 
-      onToggleFilter: function (oEvent) {
-        var oButton = oEvent.getSource();
-        oButton.toggleStyleClass("active");
-      },
+      onBPSelected: function (oEvent) {
+        var oSelectedItem = oEvent.getParameter("listItem");
+        var oContext = oSelectedItem.getBindingContext("BPData");
 
-      onBPSelected: function () {
-        var oCustomerDetailButton = this.getView().byId("idCustomerDetail");
-        if (oCustomerDetailButton) oCustomerDetailButton.setVisible(true);
+        if (!oContext) {
+          MessageToast.show(
+            "⚠️ Errore: Nessun dato trovato nella riga selezionata."
+          );
+          return;
+        }
 
+        // 🔹 Salviamo l'IdDelivery selezionato
+        this.sSelectedIdDelivery = oContext.getProperty("IdDelivery");
+        console.log(
+          "📡 BP selezionato con IdDelivery:",
+          this.sSelectedIdDelivery
+        );
+
+        // Abilita il pulsante "SUIVANT"
         var oSuivantButton = this.getView().byId("idSUIVANTButton");
-        if (oSuivantButton) oSuivantButton.setEnabled(true);
-      },
-
-      onTestF4Press: function () {
-        this.oRouter.navTo("BP-DoJour");
+        if (oSuivantButton) {
+          oSuivantButton.setEnabled(true);
+        }
       },
 
       onNextBP: function () {
-        this.oRouter.navTo("BP-RechercheProduit");
+        if (!this.sSelectedIdDelivery) {
+          MessageToast.show("⚠️ Seleziona prima un BP.");
+          return;
+        }
+
+        // 🔹 Formatta l'IdDelivery con gli zeri iniziali
+        var sFormattedId = this._formatIdDelivery(this.sSelectedIdDelivery);
+        console.log(
+          "🔹 Navigazione a BP-RechercheProduit con IdDelivery:",
+          sFormattedId
+        );
+
+        // 🔹 Naviga alla rotta con l'IdDelivery selezionato
+        this.oRouter.navTo("BP-RechercheProduit", {
+          IdDelivery: sFormattedId,
+        });
       },
 
-      onDetailDuClient: function () {
-        this.oRouter.navTo("DetailDuClient", {}, true);
+      /**
+       * 🔹 Funzione per formattare l'ID con zeri iniziali (es. '5113107' → '0005113107')
+       */
+      _formatIdDelivery: function (sId) {
+        if (!sId) return "0000000000"; // Default se non presente
+        return sId.padStart(10, "0"); // Assicura sempre 10 caratteri
       },
     });
   }

@@ -80,8 +80,8 @@
                         <items>
                             <ColumnListItem>
                                 <cells >
-                                    <Text text="{BPData>IdBp}" />
-                                    <Text text="{BPData>CodCliente}" />
+                                    <Text text="{BPData>IdDelivery}" />
+                                    <Text text="{BPData>ShipTo}" />
                                     <Text text="{BPData>NomeCliente}" />
                                     <Text text="{BPData>CodTrasp}" />
                                     <Text text="{BPData>NomeTrasp}" />

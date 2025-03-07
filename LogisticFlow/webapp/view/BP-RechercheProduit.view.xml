@@ -6,7 +6,7 @@
 
         <content>
             <Panel class="bpPanel">
-                <VBox >
+                <VBox>
 
                     <RadioButtonGroup select="onSelectionChange" columns="2">
                         <buttons>
@@ -32,13 +32,12 @@
                             <ColumnListItem type="Active" press="onRowSelect" selectable="true">
                                 <cells>
                                     <Label text="✔" visible="{BPData>pr}" class="sapUiAlignCenter" />
-                                    <Text text="{BPData>BP}" class="sapUiAlignCenter" />
-                                    <Text text="{BPData>NomClient}" />
+                                    <Text text="{BPData>MaterialCode}" class="sapUiAlignCenter" />
+                                    <Text text="{BPData>MaterialDescription}" />
                                 </cells>
                             </ColumnListItem>
                         </items>
                     </Table>
-
 
                     <HBox class="buttonContainerWithGap" width="100%" justifyContent="Center" alignItems="Center">
                         <Button text="Annuler" type="Default" press="onCancel" class="bigButton annulerButton"/>

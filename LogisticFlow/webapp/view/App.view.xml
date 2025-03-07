@@ -10,6 +10,7 @@
                 <mvc:XMLView id="DetailDuClient" viewName="logistic-flow.view.DetailDuClient"/>
                 <mvc:XMLView id="PrepareProduit" viewName="logistic-flow.view.PrepareProduit"/>
                 <mvc:XMLView id="Batch" viewName="logistic-flow.view.Batch"/>
+                <mvc:XMLView id="InformationsProduit" viewName="logistic-flow.view.InformationsProduit"/>
             </pages>
         </NavContainer>
     </App>

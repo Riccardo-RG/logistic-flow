@@ -43,7 +43,7 @@
           "target": "BP-Preparation"
         },
         {
-          "pattern": "BP-RechercheProduit",
+          "pattern": "BP-RechercheProduit/{IdDelivery}",
           "name": "BP-RechercheProduit",
           "target": "BP-RechercheProduit"
         },
@@ -71,6 +71,11 @@
           "pattern": "Manage",
           "name": "Manage",
           "target": "Manage"
+        },
+        {
+          "pattern": "InformationsProduit",
+          "name": "InformationsProduit",
+          "target": "InformationsProduit"
         }
       ],
       "targets": {
@@ -118,6 +123,13 @@
         },
         "Manage": {
           "viewName": "HandlingUnitManagement",
+          "viewType": "XML",
+          "controlId": "app",
+          "controlAggregation": "pages"
+        },
+
+        "InformationsProduit": {
+          "viewName": "InformationsProduit",
           "viewType": "XML",
           "controlId": "app",
           "controlAggregation": "pages"
