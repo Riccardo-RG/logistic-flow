@@ -2,17 +2,17 @@ sap.ui.define(
   [
     "sap/ui/core/mvc/Controller",
     "sap/ui/core/UIComponent",
-    "sap/ui/core/routing/History",
-    "sap/ui/model/odata/v2/ODataModel",
     "sap/ui/model/json/JSONModel",
+    "sap/ui/model/Filter",
+    "sap/ui/model/FilterOperator",
     "sap/m/MessageToast",
   ],
   function (
     Controller,
     UIComponent,
-    History,
-    ODataModel,
     JSONModel,
+    Filter,
+    FilterOperator,
     MessageToast
   ) {
     "use strict";
@@ -21,46 +21,42 @@ sap.ui.define(
       onInit: function () {
         this.oRouter = UIComponent.getRouterFor(this);
 
-        // 🔹 Recupera l'ID dall'URL quando la vista viene caricata
         this.oRouter
           .getRoute("BP-RechercheProduit")
           .attachPatternMatched(this._onRouteMatched, this);
+
+        var oViewModel = new JSONModel({
+          searchPlaceholder: "Rechercher par Code...",
+          inputType: "Text",
+          BPRechercheData: [],
+          selectedFilter: "MaterialCode",
+        });
+        this.getView().setModel(oViewModel, "BPData");
       },
 
       _onRouteMatched: function (oEvent) {
         var oArgs = oEvent.getParameter("arguments");
+        this.sIdDelivery = this._formatIdDelivery(oArgs.IdDelivery);
 
-        // 🔹 Formatta l'ID per SAP (con zeri iniziali)
-        this.sIdDelivery = this._formatIdDelivery(
-          oArgs.IdDelivery || "5113107"
-        );
+        console.log("📡 ID récupéré de l'URL (formaté):", this.sIdDelivery);
 
-        console.log(
-          "📡 ID recuperato dall'URL (formattato):",
-          this.sIdDelivery
-        );
-
-        // 🔹 Inizializza il modello OData solo se non esiste già
         if (!this.getView().getModel("ODataModel")) {
-          this.oODataModel = new ODataModel("/sap/opu/odata/sap/ZPP_WSM_SRV/", {
-            defaultBindingMode: "TwoWay",
-            useBatch: false,
-            defaultCountMode: "Inline",
-          });
-
-          console.log(
-            "📡 ODataModel creato e assegnato alla View:",
-            this.oODataModel
+          this.oODataModel = new sap.ui.model.odata.v2.ODataModel(
+            "/sap/opu/odata/sap/ZPP_WSM_SRV/",
+            {
+              defaultBindingMode: "TwoWay",
+              useBatch: false,
+              defaultCountMode: "Inline",
+            }
           );
           this.getView().setModel(this.oODataModel, "ODataModel");
         }
 
-        // 🔹 Avvia il caricamento dei dati solo se l'ID è valido
         if (this.sIdDelivery) {
           this._loadBPData();
         } else {
           console.warn(
-            "⚠️ Nessun ID valido trovato, impossibile caricare i dati."
+            "⚠️ Aucun ID valide trouvé, impossible de charger les données."
           );
         }
       },
@@ -69,55 +65,75 @@ sap.ui.define(
         var oModel = this.getView().getModel("ODataModel");
 
         if (!oModel) {
-          console.error("❌ ODataModel non trovato nella View.");
-          MessageToast.show("❌ Errore: ODataModel non inizializzato.");
+          console.error("❌ ODataModel non trouvé dans la vue.");
+          MessageToast.show("❌ Erreur: ODataModel non initialisé.");
           return;
         }
 
-        // 🔹 Creazione del filtro esattamente come richiesto
         var sFilter = "IdDelivery eq '" + this.sIdDelivery + "'";
-
-        console.log("📡 Avvio richiesta OData con filtro:", sFilter);
+        console.log("📡 Lancement de la requête OData avec filtre:", sFilter);
 
         oModel.read("/ZET_BP_POSITIONSet", {
-          urlParameters: {
-            $filter: sFilter, // 🔹 Imposta il filtro nella chiamata OData
-          },
+          urlParameters: { $filter: sFilter },
           success: function (oData) {
-            console.log("✅ Dati ricevuti:", oData);
+            console.log("✅ Données reçues:", oData);
 
             if (!oData || !oData.results || oData.results.length === 0) {
-              console.warn("⚠️ Nessun dato ricevuto dall'OData.");
+              console.warn("⚠️ Aucune donnée reçue de l'OData.");
               MessageToast.show(
-                "⚠️ Nessun dato trovato per l'ID: " + this.sIdDelivery
+                "⚠️ Aucune donnée trouvée pour l'ID: " + this.sIdDelivery
               );
               return;
             }
 
-            // 🔹 Crea e assegna il modello JSON
-            var oBPJsonModel = new JSONModel({
-              BPRechercheData: oData.results,
-            });
-
-            this.getView().setModel(oBPJsonModel, "BPData");
-            console.log(
-              "📡 Modello BPData impostato con i risultati:",
-              oBPJsonModel.getData()
-            );
+            var oBPJsonModel = this.getView().getModel("BPData");
+            oBPJsonModel.setProperty("/BPRechercheData", oData.results);
           }.bind(this),
           error: function (oError) {
-            console.error("❌ Errore nella richiesta OData:", oError);
-            MessageToast.show("❌ Errore nel recupero dei dati.");
+            console.error("❌ Erreur lors de la requête OData:", oError);
+            MessageToast.show("❌ Erreur lors de la récupération des données.");
           },
         });
       },
 
-      /**
-       * 🔹 Funzione per formattare l'ID con zeri iniziali (es. '5113107' → '0005113107')
-       */
+      onSearch: function (oEvent) {
+        var sQuery = oEvent.getParameter("newValue").trim();
+        var oTable = this.getView().byId("bpTable");
+        var oBinding = oTable.getBinding("items");
+        var oViewModel = this.getView().getModel("BPData");
+        var sFilterField = oViewModel.getProperty("/selectedFilter");
+
+        var aFilters = sQuery
+          ? [new Filter(sFilterField, FilterOperator.Contains, sQuery)]
+          : [];
+        oBinding.filter(aFilters);
+      },
+
+      onSelectionChange: function (oEvent) {
+        var iSelectedIndex = oEvent.getParameter("selectedIndex");
+        var oViewModel = this.getView().getModel("BPData");
+
+        var sPlaceholder =
+          iSelectedIndex === 0
+            ? "Rechercher par Code..."
+            : "Rechercher par Libellé...";
+        var sFilterField =
+          iSelectedIndex === 0 ? "MaterialCode" : "MaterialDescription";
+
+        oViewModel.setProperty("/searchPlaceholder", sPlaceholder);
+        oViewModel.setProperty("/selectedFilter", sFilterField);
+
+        var oSearchField = this.getView().byId("bpSearchField");
+        oSearchField.setValue("");
+        this.onSearch({
+          getParameter: function () {
+            return "";
+          },
+        });
+      },
+
       _formatIdDelivery: function (sId) {
-        if (!sId) return "0000000000"; // Default se non presente
-        return sId.padStart(10, "0"); // Assicura sempre 10 caratteri
+        return sId ? sId.padStart(10, "0") : "0000000000";
       },
 
       onTestScan: function () {
@@ -126,6 +142,24 @@ sap.ui.define(
 
       onNavBack: function () {
         this.oRouter.navTo("BP-Preparation");
+      },
+
+      onAdvance: function () {
+        if (this.sIdDelivery) {
+          this.oRouter.navTo("PrepareProduit", {
+            IdDelivery: this.sIdDelivery,
+          });
+        } else {
+          MessageToast.show("⚠️ Aucun ID Delivery disponible.");
+        }
+      },
+
+      onNavigateToBatch: function () {
+        if (this.sIdDelivery) {
+          this.oRouter.navTo("Batch", { IdDelivery: this.sIdDelivery });
+        } else {
+          MessageToast.show("⚠️ Aucun ID Delivery disponible.");
+        }
       },
     });
   }

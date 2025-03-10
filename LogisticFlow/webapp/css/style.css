@@ -15,21 +15,22 @@
 
 /* 🔹 Se l'icona SVG viene colorata automaticamente */
 .customIconTabBar .sapMITBFilterIcon .sapUiIcon {
-  fill: black !important; /* Forza il colore */
-  background: none !important;
-  border: none !important;
+  transition: fill 0.3s ease;
+  color: #333;
 }
 
 /* 🔹 Forza la dimensione delle icone SVG nei tab */
 .customIconTabBar .sapMITBFilterIcon {
-  width: 26px !important;
-  height: 26px !important;
+  width: 42px !important;
+  height: 42px !important;
+  margin-top: -16px;
 }
 
 /* 🔹 Riduzione dell'altezza della testata della tab bar */
 .customIconTabBar .sapMITBHead {
   display: flex !important;
   justify-content: center !important;
+  align-items: center !important; /* centra verticalmente */
   gap: 2.3rem !important; /* Aumenta il valore se serve più spazio */
   height: 32px !important;
   min-height: 55px !important;
@@ -40,6 +41,13 @@
   margin: 0 30px !important; /* Aumenta il valore per più distanza */
   height: 32px !important;
   line-height: 32px !important;
+}
+
+.customIconTabBar
+  .sapMITBFilter.sapMITBFilterSelected
+  .sapMITBFilterIcon
+  .sapUiIcon {
+  color: white !important;
 }
 
 .borderedBox {

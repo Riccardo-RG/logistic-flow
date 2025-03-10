@@ -4,7 +4,8 @@ sap.ui.define(
     "sap/ui/core/UIComponent",
     "sap/ui/model/json/JSONModel",
     "sap/ui/model/odata/v2/ODataModel",
-    "sap/ui/core/IconPool",
+    "sap/ui/model/Filter",
+    "sap/ui/model/FilterOperator",
     "sap/m/MessageToast",
   ],
   function (
@@ -12,7 +13,8 @@ sap.ui.define(
     UIComponent,
     JSONModel,
     ODataModel,
-    IconPool,
+    Filter,
+    FilterOperator,
     MessageToast
   ) {
     "use strict";
@@ -21,16 +23,15 @@ sap.ui.define(
       onInit: function () {
         this.oRouter = UIComponent.getRouterFor(this);
 
-        // 🔹 Creazione del modello OData
+        // Creazione del modello OData
         this.oODataModel = new ODataModel("/sap/opu/odata/sap/ZPP_WSM_SRV/", {
           defaultBindingMode: "TwoWay",
           useBatch: false,
           defaultCountMode: "Inline",
         });
-
         this.getView().setModel(this.oODataModel, "ODataModel");
 
-        // 🔹 Attendere il caricamento dei metadati prima di fare la richiesta
+        // Attendere il caricamento dei metadati prima di fare la richiesta
         this.oODataModel.metadataLoaded().then(
           function () {
             console.log("✅ Metadati OData caricati correttamente!");
@@ -48,7 +49,10 @@ sap.ui.define(
                 }
 
                 // Creiamo il modello JSON con i dati ricevuti
-                var oBPJsonModel = new JSONModel({ results: oData.results });
+                var oBPJsonModel = new JSONModel({
+                  results: oData.results,
+                  filteredResults: oData.results, // Inizialmente mostra tutti
+                });
 
                 // Impostiamo il modello alla View
                 this.getView().setModel(oBPJsonModel, "BPData");
@@ -63,6 +67,50 @@ sap.ui.define(
             });
           }.bind(this)
         );
+
+        // Attacca l'evento per aggiornare la selezione della IconTabBar in base alla rotta
+        this.oRouter.attachRoutePatternMatched(
+          this._onRoutePatternMatched,
+          this
+        );
+      },
+
+      _onRoutePatternMatched: function (oEvent) {
+        var sRouteName = oEvent.getParameter("name");
+        if (sRouteName === "BP-Preparation") {
+          // Imposta il primo tab (chiave "tab1") come selezionato
+          var oIconTabBar = this.byId("globalIconTabBar");
+          if (oIconTabBar) {
+            oIconTabBar.setSelectedKey("tab1");
+          }
+        }
+      },
+
+      onGlobalTabSelect: function (oEvent) {
+        var sSelectedKey = oEvent.getParameter("selectedKey");
+        console.log("Tab selezionato: " + sSelectedKey);
+
+        if (sSelectedKey === "tab1") {
+          this.oRouter.navTo("BP-Preparation");
+        } else if (sSelectedKey === "tab2") {
+          // Verifica che sia stato selezionato un BP
+          if (!this.sSelectedIdDelivery) {
+            MessageToast.show("⚠️ Seleziona prima un BP.");
+            // Ritorna al tab1 se nessun BP è selezionato
+            this.byId("globalIconTabBar").setSelectedKey("tab1");
+            return;
+          }
+          // Formatta l'idDelivery e naviga alla rotta BP-RechercheProduit passando il parametro IdDelivery
+          var sFormattedId = this._formatIdDelivery(this.sSelectedIdDelivery);
+          console.log(
+            "Navigazione a BP-RechercheProduit con IdDelivery: " + sFormattedId
+          );
+          this.oRouter.navTo("BP-RechercheProduit", {
+            IdDelivery: sFormattedId,
+          });
+        } else if (sSelectedKey === "tab3") {
+          this.oRouter.navTo("InformationsProduit");
+        }
       },
 
       onNavBack: function () {
@@ -80,45 +128,64 @@ sap.ui.define(
           return;
         }
 
-        // 🔹 Salviamo l'IdDelivery selezionato
+        // Salva l'idDelivery selezionato per la navigazione
         this.sSelectedIdDelivery = oContext.getProperty("IdDelivery");
-        console.log(
-          "📡 BP selezionato con IdDelivery:",
-          this.sSelectedIdDelivery
-        );
+        console.log("BP selezionato: " + this.sSelectedIdDelivery);
 
-        // Abilita il pulsante "SUIVANT"
         var oSuivantButton = this.getView().byId("idSUIVANTButton");
         if (oSuivantButton) {
           oSuivantButton.setEnabled(true);
+        }
+
+        var oCustomerDetailButton = this.getView().byId("idCustomerDetail");
+        if (oCustomerDetailButton) {
+          oCustomerDetailButton.setVisible(true);
         }
       },
 
       onNextBP: function () {
         if (!this.sSelectedIdDelivery) {
-          MessageToast.show("⚠️ Seleziona prima un BP.");
+          MessageToast.show("⚠️ Sélectionnez d’abord un BP.");
           return;
         }
 
-        // 🔹 Formatta l'IdDelivery con gli zeri iniziali
         var sFormattedId = this._formatIdDelivery(this.sSelectedIdDelivery);
         console.log(
-          "🔹 Navigazione a BP-RechercheProduit con IdDelivery:",
-          sFormattedId
+          "Navigazione a BP-RechercheProduit con IdDelivery: " + sFormattedId
         );
+        this.oRouter.navTo("BP-RechercheProduit", { IdDelivery: sFormattedId });
+      },
 
-        // 🔹 Naviga alla rotta con l'IdDelivery selezionato
-        this.oRouter.navTo("BP-RechercheProduit", {
-          IdDelivery: sFormattedId,
+      onDetailDuClient: function () {
+        this.oRouter.navTo("DetailDuClient");
+      },
+
+      onTestF4Press: function () {
+        this.oRouter.navTo("BP-DoJour");
+      },
+
+      onSearchBP: function (oEvent) {
+        var sQuery =
+          oEvent.getParameter("value") || oEvent.getSource().getValue();
+        var oModel = this.getView().getModel("BPData");
+
+        if (!oModel) return;
+
+        var aResults = oModel.getProperty("/results") || [];
+        var aFiltered = aResults.filter(function (oItem) {
+          return oItem.IdDelivery.includes(sQuery);
         });
+
+        oModel.setProperty("/filteredResults", aFiltered);
+        console.log("Filtrati:", aFiltered);
       },
 
       /**
-       * 🔹 Funzione per formattare l'ID con zeri iniziali (es. '5113107' → '0005113107')
+       * Funzione per formattare l'ID con zeri iniziali (es. '5113107' → '0005113107')
        */
       _formatIdDelivery: function (sId) {
-        if (!sId) return "0000000000"; // Default se non presente
-        return sId.padStart(10, "0"); // Assicura sempre 10 caratteri
+        if (!sId) return "0000000000";
+        return sId.padStart(10, "0");
       },
     });
   }

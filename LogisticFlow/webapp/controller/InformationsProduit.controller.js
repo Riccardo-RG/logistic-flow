@@ -25,23 +25,22 @@ sap.ui.define(
         });
 
         if (bFieldFilled) {
-          // ✅ Boîte de dialogue de confirmation en français avec boutons personnalisés
           MessageBox.show(
             "Des données ont été saisies dans les champs. Êtes-vous sûr de vouloir quitter cette page ?",
             {
               icon: MessageBox.Icon.WARNING,
               title: "Attention",
-              actions: ["Oui", "Non"], // 🔹 Boutons personnalisés en français
+              actions: ["Oui", "Non"],
               emphasizedAction: "Oui",
               onClose: function (sAction) {
                 if (sAction === "Oui") {
-                  this.oRouter.navTo("", {}, true);
+                  this.oRouter.navTo("MainView", {}, true);
                 }
               }.bind(this),
             }
           );
         } else {
-          this.oRouter.navTo("", {}, true);
+          this.oRouter.navTo("MainView", {}, true);
         }
       },
     });

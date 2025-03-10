@@ -4,7 +4,6 @@
     xmlns:core="sap.ui.core">
 
     <Page id="pageBPPreparation" title="DD - Préparation BP" class="bpPreparationPage" showNavButton="true" navButtonPress=".onNavBack">
-
         <content>
             <VBox class="tabContent">
                 <core:Fragment fragmentName="logistic-flow.fragment.IconTabBar" type="XML"/>
@@ -16,19 +15,17 @@
                     </HBox>
                     <HBox class="inputPair">
                         <Label text="BP:" class="boldLabel"/>
-                        <Input id="bpInput" placeholder="Nombre" liveChange="onSearchBP" width="60px"/>
+                        <Input id="bpInput" placeholder="Nombre" liveChange="onSearchBP" width="60px" type="Number"/>
                     </HBox>
                 </HBox>
 
-                <!-- Bottoni in riga con SpaceAround -->
                 <HBox class="bpButtons" justifyContent="SpaceAround">
                     <Button id="idBpAutoButton" text="BP AUTO" press="onToggleFilter" class="orderButton"/>
                     <Button text="LISTE COMPLÈTE" press="onTestF4Press" class="orderButton"/>
                 </HBox>
 
-                <!-- Tabella dati -->
                 <VBox class="tabContent">
-                    <Table id="bpTable" class="scrollableTable" mode="SingleSelectMaster" items="{BPData>/results}" selectionChange=".onBPSelected">
+                    <Table id="bpTable" class="scrollableTable" mode="SingleSelectMaster" items="{BPData>/filteredResults}" selectionChange=".onBPSelected">
                         <columns>
                             <Column>
                                 <header>
@@ -55,40 +52,16 @@
                                     <Text text="Transporteur" />
                                 </header>
                             </Column>
-                            <!-- <Column>
-                                <header>
-                                    <Text text="ShipPoint" />
-                                </header>
-                            </Column>
-                            <Column>
-                                <header>
-                                    <Text text="Uscita merci" />
-                                </header>
-                            </Column>
-                            <Column>
-                                <header>
-                                    <Text text="Data cons." />
-                                </header>
-                            </Column>
-                            <Column>
-                                <header>
-                                    <Text text="Stato prelievo" />
-                                </header>
-                            </Column> -->
                         </columns>
 
                         <items>
                             <ColumnListItem>
-                                <cells >
+                                <cells>
                                     <Text text="{BPData>IdDelivery}" />
                                     <Text text="{BPData>ShipTo}" />
                                     <Text text="{BPData>NomeCliente}" />
                                     <Text text="{BPData>CodTrasp}" />
                                     <Text text="{BPData>NomeTrasp}" />
-                                    <!-- <Text text="{BPData>ShipPoint}" />
-                                    <Text text="{BPData>PlannedGi}" />
-                                    <Text text="{BPData>Data}" />
-                                    <Text text="{BPData>PikingStatus}" /> -->
                                 </cells>
                             </ColumnListItem>
                         </items>

@@ -4,111 +4,121 @@ sap.ui.define(
     "sap/ui/core/UIComponent",
     "sap/m/MessageBox",
     "sap/m/MessageToast",
+    "sap/ui/model/odata/v2/ODataModel",
   ],
-  function (Controller, UIComponent, MessageBox, MessageToast) {
+  function (Controller, UIComponent, MessageBox, MessageToast, ODataModel) {
     "use strict";
 
     return Controller.extend("logistic-flow.controller.Batch", {
       onInit: function () {
         // Recupera il router per la navigazione
         this.oRouter = UIComponent.getRouterFor(this);
+
+        // Recupera l'IdDelivery dalla rotta
+        this.oRouter
+          .getRoute("Batch")
+          .attachPatternMatched(this._onRouteMatched, this);
       },
 
-      // Eseguito alla pressione del pulsante "Continuer"
+      _onRouteMatched: function (oEvent) {
+        var oArgs = oEvent.getParameter("arguments");
+        this.sIdDelivery = oArgs.IdDelivery || "";
+
+        // Inizializza il modello OData SOLO se non già presente
+        if (!this.getView().getModel("ODataModel")) {
+          this.oODataModel = new ODataModel("/sap/opu/odata/sap/ZPP_WSM_SRV/", {
+            defaultBindingMode: "TwoWay",
+            useBatch: false,
+            defaultCountMode: "Inline",
+          });
+          this.getView().setModel(this.oODataModel, "ODataModel");
+        }
+      },
+
+      // Funzione chiamata quando si preme "Continuer"
       onValidate: function () {
-        console.log("Continuer button pressed.");
+        console.log("➡️ Continuer button pressed.");
         this._createMaterialDet();
       },
 
-      // Eseguito alla pressione del pulsante "Fin traitement"
+      // Funzione chiamata quando si preme "Fin traitement"
       onSubmit: function () {
-        console.log("Fin traitement button pressed.");
+        console.log("➡️ Fin traitement button pressed.");
         this._createMaterialDet();
       },
 
       // Funzione per effettuare la chiamata POST al servizio OData
       _createMaterialDet: function () {
         var oView = this.getView();
-        var sConditionnement = oView.byId("conditionnement")
-          ? oView.byId("conditionnement").getValue()
-          : "";
-        var sQuantite = oView.byId("inputQuantite")
-          ? oView.byId("inputQuantite").getValue()
-          : "";
-        var sLotPropose = oView.byId("inputLotPropose")
-          ? oView.byId("inputLotPropose").getValue()
-          : "";
 
-        // Controlla che tutti i campi obbligatori siano compilati
+        var sConditionnement = oView.byId("conditionnement").getValue();
+        var sQuantite = oView.byId("inputQuantite").getValue();
+        var sLotPropose = oView.byId("inputLotPropose").getValue();
+
+        // Controllo che tutti i campi obbligatori siano compilati
         if (!sConditionnement || !sQuantite || !sLotPropose) {
           MessageBox.warning(
-            "Veuillez remplir tous les champs obligatoires avant de soumettre."
+            "⚠️ Veuillez remplir tous les champs obligatoires avant de soumettre."
           );
           return;
         }
 
         // Creazione del payload da inviare
         var oPayload = {
-          IdDelivery: "12345", // Valore fittizio, da sostituire con il reale
-          Item: "001", // Valore fittizio, da adattare
+          IdDelivery: this.sIdDelivery || "0005113107", // Recuperato dinamicamente
+          Item: "000001", // Da aggiornare se dinamico
           IdCollo: sLotPropose,
-          QPick: parseFloat(sQuantite) || 0,
-          UMQPick: "KG", // Da verificare in base ai metadata
-          Conditionnement: sConditionnement,
-          TipoImbalo: "Standard", // Da adattare in base alle necessità
+          QtPick: parseFloat(sQuantite) || 0, // ✅ Convertito in numero
+          UmQtPick: "KG", // Da verificare nei metadata
+          Batch: "B98765", // Valore fisso, aggiornare se dinamico
+          TipoImballo: sConditionnement,
         };
 
         console.log("📡 Invio richiesta OData con payload:", oPayload);
 
-        // Recupera il modello OData configurato in manifest.json
-        var oModel = this.getView().getModel();
+        // Recupera il modello OData
+        var oModel = this.getView().getModel("ODataModel");
         if (!oModel) {
           MessageBox.error("❌ Errore: Modello OData non trovato.");
           return;
         }
 
-        // Chiamata POST al servizio OData, utilizzando l'EntitySet corretto
-        oModel.create("/ZET_MATERIAL_DET_CREATE_ENTITY", oPayload, {
+        // Chiamata POST al servizio OData
+        oModel.create("/ZET_MATERIAL_DETSet", oPayload, {
           success: function (oData, response) {
             MessageToast.show("✅ Dati inviati con successo!");
             console.log("✅ Risposta OData:", response);
           },
           error: function (oError) {
             MessageBox.error(
-              "❌ Errore nell'invio dei dati: " + JSON.stringify(oError)
+              "❌ Errore nell'invio dei dati. Dettagli nella console."
             );
             console.error("❌ Dettagli errore:", oError);
+
+            // Debugging avanzato
+            if (oError.responseText) {
+              try {
+                var oErrorResponse = JSON.parse(oError.responseText);
+                console.error("📌 Dettagli errore SAP:", oErrorResponse);
+              } catch (e) {
+                console.error(
+                  "❌ Errore durante il parsing della risposta:",
+                  e
+                );
+              }
+            }
           },
         });
       },
 
-      // Gestisce la navigazione all'indietro, richiedendo conferma se sono stati inseriti dati
+      // Gestisce la navigazione all'indietro
       onNavBack: function () {
-        var oView = this.getView();
-        var aInputIds = ["conditionnement", "inputQuantite", "inputLotPropose"];
-
-        var bFieldFilled = aInputIds.some(function (sId) {
-          var oInput = oView.byId(sId);
-          return oInput && oInput.getValue && oInput.getValue().trim() !== "";
-        });
-
-        if (bFieldFilled) {
-          MessageBox.show(
-            "Des données ont été saisies dans les champs. Êtes-vous sûr de vouloir quitter cette page ?",
-            {
-              icon: MessageBox.Icon.WARNING,
-              title: "Attention",
-              actions: ["Oui", "Non"],
-              emphasizedAction: "Oui",
-              onClose: function (sAction) {
-                if (sAction === "Oui") {
-                  this.oRouter.navTo("PrepareProduit", {}, true);
-                }
-              }.bind(this),
-            }
-          );
+        if (this.sIdDelivery) {
+          this.oRouter.navTo("PrepareProduit", {
+            IdDelivery: this.sIdDelivery,
+          });
         } else {
-          this.oRouter.navTo("PrepareProduit", {}, true);
+          this.oRouter.navTo("PrepareProduit");
         }
       },
     });

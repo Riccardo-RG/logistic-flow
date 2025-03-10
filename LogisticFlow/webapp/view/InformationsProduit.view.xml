@@ -2,7 +2,7 @@
     xmlns="sap.m"
     xmlns:core="sap.ui.core" controllerName="logistic-flow.controller.InformationsProduit">
 
-    <Page title="Informations sur le Produit" showNavButton="true" navButtonPress="onNavBack">
+    <Page title="Informations sur le Produit" showNavButton="true" navButtonPress="onNavBack" enableScrolling="false">
 
         <content>
             <Panel class="bpPanel sapUiSmallPaddingTop">

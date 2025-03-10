@@ -2,7 +2,7 @@
     xmlns="sap.m"
     xmlns:core="sap.ui.core" controllerName="logistic-flow.controller.BP-DoJour">
 
-    <Page title="Recherche Bon De Prèparation" showNavButton="true" navButtonPress="onNavBack">
+    <Page title="Recherche Bon De Prèparation" showNavButton="true" navButtonPress="onNavBack" enableScrolling="false">
 
         <content>
             <Panel class="bpPanel">

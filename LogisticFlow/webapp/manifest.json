@@ -58,12 +58,12 @@
           "target": "DetailDuClient"
         },
         {
-          "pattern": "PrepareProduit",
+          "pattern": "PrepareProduit/{IdDelivery}",
           "name": "PrepareProduit",
           "target": "PrepareProduit"
         },
         {
-          "pattern": "Batch",
+          "pattern": "Batch/{IdDelivery}",
           "name": "Batch",
           "target": "Batch"
         },

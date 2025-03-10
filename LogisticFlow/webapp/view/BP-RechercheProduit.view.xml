@@ -2,19 +2,22 @@
     xmlns="sap.m"
     xmlns:core="sap.ui.core" controllerName="logistic-flow.controller.BP-RechercheProduit">
 
-    <Page title="Recherche Produit avec préaffectations" showNavButton="true" navButtonPress="onNavBack">
-
+    <Page title="Recherche Produit avec préaffectations" showNavButton="true" navButtonPress="onNavBack" enableScrolling="false">
         <content>
             <Panel class="bpPanel">
                 <VBox>
+                    <!-- FlexBox contenente il RadioButtonGroup a sinistra e il bottone di avanzamento a destra -->
+                    <FlexBox direction="Row" justifyContent="SpaceBetween" alignItems="Center" class="sapUiSmallMarginBottom">
+                        <RadioButtonGroup id="filterOption" select="onSelectionChange" columns="2">
+                            <buttons>
+                                <RadioButton text="Code" selected="true" />
+                                <RadioButton text="Libellé" />
+                            </buttons>
+                        </RadioButtonGroup>
+                        <Button text="Suivant" press="onAdvance" type="Emphasized" />
+                    </FlexBox>
 
-                    <RadioButtonGroup select="onSelectionChange" columns="2">
-                        <buttons>
-                            <RadioButton text="Code" selected="true" />
-                            <RadioButton text="Libellé" />
-                        </buttons>
-                    </RadioButtonGroup>
-                    <SearchField id="bpSearchField" width="100%" placeholder="Rechercher..." liveChange="onSearch" />
+                    <Input id="bpSearchField" width="100%" placeholder="{BPData>/searchPlaceholder}" liveChange="onSearch" type="{BPData>/inputType}" />
 
                     <Table id="bpTable" items="{BPData>/BPRechercheData}" class="borderedTable scrollableTable sapUiSmallMarginTop">
                         <columns>
@@ -46,12 +49,5 @@
                 </VBox>
             </Panel>
         </content>
-        <footer>
-            <Bar>
-                <contentMiddle>
-                    <Button text="Test Scan" press="onTestScan" type="Transparent" />
-                </contentMiddle>
-            </Bar>
-        </footer>
     </Page>
 </mvc:View>

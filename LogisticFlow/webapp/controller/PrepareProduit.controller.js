@@ -11,6 +11,16 @@ sap.ui.define(
     return Controller.extend("logistic-flow.controller.PrepareProduit", {
       onInit: function () {
         this.oRouter = UIComponent.getRouterFor(this);
+
+        // Récupération de l'IdDelivery depuis l'URL si présent
+        this.oRouter
+          .getRoute("PrepareProduit")
+          .attachPatternMatched(this._onRouteMatched, this);
+      },
+
+      _onRouteMatched: function (oEvent) {
+        var oArgs = oEvent.getParameter("arguments");
+        this.sIdDelivery = oArgs.IdDelivery || "";
       },
 
       onInputChange: function (oEvent) {
@@ -20,8 +30,14 @@ sap.ui.define(
       },
 
       onSuivantPress: function () {
-        // Navigation vers la route "Batch"
-        this.oRouter.navTo("Batch");
+        // Navigation vers la route "Batch" avec l'IdDelivery
+        if (this.sIdDelivery) {
+          this.oRouter.navTo("Batch", {
+            IdDelivery: this.sIdDelivery,
+          });
+        } else {
+          this.oRouter.navTo("Batch");
+        }
       },
 
       onNavBack: function () {
@@ -29,26 +45,35 @@ sap.ui.define(
         var sValue = oInput.getValue();
 
         if (sValue && sValue.trim().length > 0) {
-          // ✅ Personalisation des boutons en français
+          // ✅ Personalizzazione dei pulsanti
           MessageBox.show(
             "Des données ont été saisies dans le champ produit. Êtes-vous sûr de vouloir revenir en arrière ?",
             {
               icon: MessageBox.Icon.WARNING,
               title: "Attention",
-              actions: [
-                "Oui", // 🔹 Bouton personnalisé pour "OUI"
-                "Non", // 🔹 Bouton personnalisé pour "NON"
-              ],
+              actions: ["Oui", "Non"],
               emphasizedAction: "Oui",
               onClose: function (sAction) {
                 if (sAction === "Oui") {
-                  this.oRouter.navTo("BP-Preparation");
+                  if (this.sIdDelivery) {
+                    this.oRouter.navTo("BP-RechercheProduit", {
+                      IdDelivery: this.sIdDelivery,
+                    });
+                  } else {
+                    MessageToast.show("⚠️ Aucun IdDelivery trouvé.");
+                  }
                 }
               }.bind(this),
             }
           );
         } else {
-          this.oRouter.navTo("BP-Preparation");
+          if (this.sIdDelivery) {
+            this.oRouter.navTo("BP-RechercheProduit", {
+              IdDelivery: this.sIdDelivery,
+            });
+          } else {
+            MessageToast.show("⚠️ Aucun IdDelivery trouvé.");
+          }
         }
       },
     });

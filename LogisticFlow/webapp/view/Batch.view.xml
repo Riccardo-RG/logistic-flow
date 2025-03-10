@@ -2,33 +2,34 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:core="sap.ui.core">
-    <Page title="Saisie des préparations" showNavButton="true" navButtonPress="onNavBack">
+
+    <Page title="Saisie des préparations" showNavButton="true" navButtonPress="onNavBack" enableScrolling="false">
         <content>
             <Panel class="bpPanel">
                 <core:Fragment fragmentName="logistic-flow.fragment.IconTabBar" type="XML"/>
-
                 <VBox>
                     <Title text="Saisie" level="H2" class="sapUiSmallMarginTop"/>
                     <FlexBox direction="Column" class="borderedBox" alignItems="Stretch" justifyContent="Start">
                         <HBox alignItems="Center" class="sapUiMediumMarginBottom">
                             <Label text="Produit:" width="150px" class="boldLabel"/>
-                            <Text text="GCI BLANC S9016 VB40 IHB"/>
+                            <Text id="produitText" text="GCI BLANC S9016 VB40 IHB"/>
                         </HBox>
                         <HBox alignItems="Center" class="sapUiMediumMarginBottom">
                             <Label text="Liner:" width="150px" class="boldLabel"/>
-                            <Text text="OUI"/>
+                            <Text id="linerText" text="OUI"/>
                         </HBox>
                         <HBox alignItems="Center" class="sapUiMediumMarginBottom">
                             <Label text="U/C:" width="150px" class="boldLabel"/>
-                            <Text text="2 x SEAU EXPORT 25KG"/>
+                            <Text id="ucText" text="2 x SEAU EXPORT 25KG"/>
                         </HBox>
                         <HBox alignItems="Center" class="sapUiMediumMarginBottom">
                             <Label text="Qtè à prèparer:" width="150px" class="boldLabel"/>
-                            <Text text="50.000"/>
+                            <Text id="qtPrepareText" text="50.000"/>
                         </HBox>
+
                         <HBox alignItems="Center" class="sapUiMediumMarginBottom">
                             <Label text="Qtè dèjà prèparèe:" width="150px" class="boldLabel"/>
-                            <Text text="49.500"/>
+                            <Text id="qtDejaPrepareText" text="49.500"/>
                         </HBox>
                         <HBox alignItems="Center" class="sapUiSmallMarginBottom">
                             <Label text="Conditionnement:" width="150px" class="boldLabel"/>
@@ -42,22 +43,17 @@
                             <Label text="Lot proposé:" width="150px" class="boldLabel"/>
                             <Input id="inputLotPropose" width="60%"/>
                         </HBox>
-
-
                         <HBox alignItems="Center" class="sapUiSmallMarginBottom" justifyContent="SpaceAround">
                             <Label text="Nb collis:" width="100px" class="boldLabel"/>
-                            <Label text="1"/>
+                            <Label id="nbCollis" text="1"/>
                             <Label text="NB° BP:" width="100px" class="boldLabel"/>
-                            <Label text="5556493"/>
+                            <Label id="nbBP" text="5556493"/>
                         </HBox>
                     </FlexBox>
 
                     <!-- Bottoni centrati -->
                     <HBox alignItems="Center" justifyContent="Center" class="sapUiMediumMarginTop">
-                        <!-- Pulsante "Continuer" -->
                         <Button text="Continuer" press="onValidate" class="sapUiSizeCozy bigButton"/>
-
-                        <!-- Pulsante "Fin traitement" con submit -->
                         <Button text="Fin traitement" type="Emphasized" press="onSubmit" class="sapUiSizeCozy  bigButton"/>
                     </HBox>
                 </VBox>

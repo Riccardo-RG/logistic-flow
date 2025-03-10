@@ -3,7 +3,7 @@
   xmlns="sap.m"
   xmlns:layout="sap.ui.layout.form" displayBlock="true">
 
-  <Page title="DETAIL DU CLIENT" class="bpPreparationPage" showNavButton="true" navButtonPress=".onNavBack">
+  <Page title="DETAIL DU CLIENT" class="bpPreparationPage" showNavButton="true" navButtonPress=".onNavBack" enableScrolling="false">
     <content>
       <Panel >
         <layout:SimpleForm id="simpleFormDetailDuClient" editable="false" layout="ResponsiveGridLayout" class="sapUiSmallMarginTop">
