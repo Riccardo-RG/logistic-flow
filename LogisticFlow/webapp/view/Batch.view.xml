@@ -37,11 +37,11 @@
                         </HBox>
                         <HBox alignItems="Center" class="sapUiSmallMarginBottom">
                             <Label text="Quantité:" width="150px" class="boldLabel"/>
-                            <Input id="inputQuantite" width="60%"/>
+                            <Input id="inputQuantite2" width="60%"/>
                         </HBox>
                         <HBox alignItems="Center" class="sapUiSmallMarginBottom">
                             <Label text="Lot proposé:" width="150px" class="boldLabel"/>
-                            <Input id="inputLotPropose" width="60%"/>
+                            <Input id="inputLotPropose2" width="60%"/>
                         </HBox>
                         <HBox alignItems="Center" class="sapUiSmallMarginBottom" justifyContent="SpaceAround">
                             <Label text="Nb collis:" width="100px" class="boldLabel"/>

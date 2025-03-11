@@ -95,7 +95,7 @@ sap.ui.define(
         } else if (sSelectedKey === "tab2") {
           // Verifica che sia stato selezionato un BP
           if (!this.sSelectedIdDelivery) {
-            MessageToast.show("⚠️ Seleziona prima un BP.");
+            MessageToast.show("⚠️ Sélectionnez d’abord un BP.");
             // Ritorna al tab1 se nessun BP è selezionato
             this.byId("globalIconTabBar").setSelectedKey("tab1");
             return;

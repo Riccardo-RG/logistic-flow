@@ -1,0 +1,21 @@
+targets:
+  - name: "sap-system"
+    type: "nwabap"
+    server: "https://fioriwdt.polynt.com:44310"
+    client: "100"
+    auth:
+      type: "basic"
+      username: "${UI5_DEPLOY_USER}"
+      password: "${UI5_DEPLOY_PASS}"
+    app:
+      name: "Z_POLYNT_APP"
+      package: "$TMP"
+      transport: ""
+      bspContainer: "Z_POLYNT_APP"
+      bspContainerText: "Logistic Flow Application"
+    resources:
+      path: "dist/" # Questo indica che viene deployato solo il contenuto della cartella dist
+    exclude:
+      - "node_modules/"
+      - ".git/"
+      - ".vscode/"

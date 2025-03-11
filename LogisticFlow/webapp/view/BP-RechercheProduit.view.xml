@@ -6,7 +6,10 @@
         <content>
             <Panel class="bpPanel">
                 <VBox>
-                    <!-- FlexBox contenente il RadioButtonGroup a sinistra e il bottone di avanzamento a destra -->
+                    <!-- Include il fragment con un id per poterlo referenziare -->
+                    <core:Fragment fragmentName="logistic-flow.fragment.IconTabBar" type="XML" id="iconTabBarFragment" />
+
+                    <!-- Resto della view -->
                     <FlexBox direction="Row" justifyContent="SpaceBetween" alignItems="Center" class="sapUiSmallMarginBottom">
                         <RadioButtonGroup id="filterOption" select="onSelectionChange" columns="2">
                             <buttons>

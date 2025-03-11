@@ -10,11 +10,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@ui5/cli": "^3.11.6",
     "@ui5/fs": "^3.0.5",
     "@ui5/logger": "^3.0.0"
   },
   "devDependencies": {
+    "@ui5/cli": "^2.14.0",
+    "ui5-deployer": "^0.4.1",
     "ui5-middleware-index": "^3.1.0",
     "ui5-middleware-livereload": "^3.1.0",
     "ui5-middleware-proxy": "^0.0.20",
